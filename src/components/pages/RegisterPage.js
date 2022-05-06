@@ -1,9 +1,15 @@
 import React from "react";
+import background from "../img/frame1.png";
 
 const RegisterPage = () => {
   return (
     <div className="min-h-screen w-full flex justify-center lg:justify-start items-center">
-      <div className="bg-rectem-50 w-6/12 h-screen hidden lg:block">
+      <div
+        style={{
+          backgroundImage: `url(${background})`,
+        }}
+        className="bg-rectem-50 w-6/12 h-screen hidden lg:block"
+      >
         <div className="text-3xl text-white p-24 absolute left-0 bottom-0">
           Redeemers College of Science and <br /> Technology
         </div>
