@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#check-box-1:checked ~ .check-1{
+  @apply text-opacity-100;
+  animation: check-anime 0.5s 1;
+}
+
+
+
+.check-1 {
+  @apply text-opacity-100;
+}
+
+@keyframes check-anime {
+  0%, 100% {
+    @apply transform scale-100
+  }
+
+  50% {
+    @apply transform scale-150 text-opacity-0
+  }
+}
