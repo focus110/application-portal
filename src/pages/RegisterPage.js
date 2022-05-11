@@ -1,7 +1,7 @@
 import React from "react";
-import background from "../../img/frame1.png";
+import background from "../img/frame1.png";
 import { Link } from "react-router-dom";
-import logo from "../../img/logo.png";
+import logo from "../img/logo.png";
 
 const RegisterPage = () => {
   return (
