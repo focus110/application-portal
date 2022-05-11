@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import background from "../../img/frame2.jpg";
-import logo from "../../img/logo.png";
+import background from "../img/frame2.jpg";
+import logo from "../img/logo.png";
 
 const LoginPage = () => {
   // const [setpassword, password] = useState("");
@@ -89,7 +89,7 @@ const LoginPage = () => {
               >
                 Not registered yet? Create an Account{" "}
                 <span class="text-rectem-50 no-underline hover:underline">
-                  Sign in
+                  Sign up
                 </span>
               </Link>
             </div>
