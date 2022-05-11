@@ -89,7 +89,7 @@ const LoginPage = () => {
               >
                 Not registered yet? Create an Account{" "}
                 <span class="text-rectem-50 no-underline hover:underline">
-                  Sign in
+                  Sign up
                 </span>
               </Link>
             </div>
