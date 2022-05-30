@@ -126,6 +126,17 @@ const RegisterPage = () => {
               />
             </div>
 
+            <div className="flex flex-col items-start">
+              <label className="block text-sm font-medium text-rectem-100 mb-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+                placeholder="confirm password"
+              />
+            </div>
+
             <div className="flex items-center text-sm font-medium text-rectem-100 cursor-pointer relative">
               <input
                 className="mr-2 text-rectem-50 text-2xl appearance-none rounded border border-rectem-50 h-5 w-5"
@@ -149,7 +160,7 @@ const RegisterPage = () => {
               </div>
               <div>
                 I agree to the{" "}
-                <span className="text-rectem-50">Tearms & Conditions</span>
+                <span className="text-rectem-50">Terms & Conditions</span>
               </div>
             </div>
 
