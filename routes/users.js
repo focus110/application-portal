@@ -2,26 +2,13 @@ const router = require("express").Router();
 const { check } = require("express-validator");
 // const upload = multer({ dest: "uploads/" });
 
-const {
-  listUsers,
-  createUser,
-  updateUserById,
-  loginUser,
-  deleteUserById,
-  findUserbyId,
-} = require("../controllers/userController");
+const { createUser, resetPwd } = require("../controllers/userController");
 
-const { authUser, isAdmin } = require("../helper/jwt");
-
-// fetch all users*
-router.get("/", [authUser, isAdmin], listUsers);
-
-// fetch user by id*
-router.get("/:id", [authUser], findUserbyId);
-
-// Create user*
+// @route POST api/users
+// @desc Register user*
+// @access Public
 router.post(
-  "/signup",
+  "/",
   [
     check("email", "Provide a valid email").isEmail(),
     check("password", "Password should be more than 6").isLength({ min: 6 }),
@@ -29,18 +16,14 @@ router.post(
   createUser
 );
 
-// Update user*
-router.put("/:id", [authUser], updateUserById);
-
-// Login user*
-router.post("/login", loginUser);
-
-// Reset password
-router.post("/forget-password", (req, res) => {
-  res.send("forget password");
-});
-
-// Delete user
-router.delete("/:id", [authUser], deleteUserById);
+// N
+// @route UPDATE PASSWORD api/users
+// @desc Reset password
+// @access Public
+router.post(
+  "/forget-password",
+  check("email", "Provide a valid email").isEmail(),
+  resetPwd
+);
 
 module.exports = router;

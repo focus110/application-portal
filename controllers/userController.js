@@ -1,4 +1,4 @@
-const response = require("../helper/response");
+const response = require("../middleware/response");
 const User = require("../models/User");
 const UserOTP = require("../models/UserOTP");
 const bcrypt = require("bcrypt");
@@ -33,17 +33,18 @@ class UserController {
       res.send(response("Fetched users successfully", users));
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 
   // FETCH USER BY ID
-  static async findUserbyId(req, res) {
+  static async getUser(req, res) {
     try {
-      const id = req.params.id;
+      const id = req.user.id;
 
       const user = await User.findOne({
         attributes: { exclude: ["password"] },
-        where: { id: id },
+        where: { id },
       });
 
       if (!user) {
@@ -53,6 +54,7 @@ class UserController {
       res.send(response("Fetched user successfully", user));
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 
@@ -209,6 +211,7 @@ class UserController {
       res.send(response("User was created successfully", { user, userOTPS }));
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 
@@ -217,25 +220,28 @@ class UserController {
     const file = req.file;
 
     try {
-      let { profileImage, username, email, phone, password, courses, olevel } =
+      const { profileImage, username, phone, password, courses, olevel } =
         req.body;
       const id = req.params.id;
+
+      // check if phone is verified
+      // check if email is verified
 
       // find the id in database
       const userExists = await User.findOne({
         where: {
-          id: id,
+          id,
         },
       });
-
-      // if password is provided then bcrypt password
-      password ? (password = bcrypt.hashSync(password, 10)) : null;
 
       // if id do not exist print error message
       if (!userExists)
         return res
           .status(500)
           .send(response(" User with the given ID does not exists", {}, false));
+
+      // if password is provided then bcrypt password
+      password ? (password = bcrypt.hashSync(password, 10)) : null;
 
       // update user username, email, phone, password
       const user = await User.update(
@@ -251,53 +257,58 @@ class UserController {
         { where: { id: id } }
       );
 
-      if (!user)
+      if (!user) {
         return res
           .status(500)
           .send(response("The user can not be updated", {}, false));
+      }
 
       return res.send(response("User was successfully updated", user));
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 
   // LOGIN USER
   static async loginUser(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const { email, password } = req.body;
 
-      const user = await User.findOne({ where: { email: email } });
+      const user = await User.findOne({ where: { email } });
 
       // check if user exit
       if (!user) {
-        return res.status(404).send(response("user not found", {}, false));
+        return res.status(404).send(response("Invalid Credentials", {}, false));
       }
 
-      let isMatch = bcrypt.compareSync(password, user.password);
+      const isMatch = bcrypt.compareSync(password, user.password);
 
       // check if password match
-      if (user && isMatch) {
-        const token = jwt.sign(
-          {
-            id: user.id,
-            role: user.role,
-          },
-          secret,
-          { expiresIn: "1d" }
-        );
-
-        return res.send(
-          response("Login successful", {
-            user: user.email,
-            token: token,
-          })
-        );
-      } else {
-        res.status(403).send(response("invalid credentials", {}, false));
+      if (!isMatch) {
+        return res.status(403).send(response("invalid credentials", {}, false));
       }
+
+      const payload = {
+        id: user.id,
+        role: user.role,
+      };
+      const token = jwt.sign(payload, secret, { expiresIn: "1d" });
+
+      return res.send(
+        response("Login successful", {
+          user: user.email,
+          token: token,
+        })
+      );
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 
@@ -309,7 +320,7 @@ class UserController {
       const userExists = await User.findOne({ where: { id: id } });
 
       if (!userExists) {
-        return res.status(404).send(response("user not found", {}, false));
+        return res.status(404).send(response("Invalid Credentials", {}, false));
       }
 
       const user = await User.update(
@@ -327,6 +338,53 @@ class UserController {
       return res.send(response("User was successfully deleted", user));
     } catch (err) {
       console.log(err.message);
+      res.status(500).send("server error");
+    }
+  }
+
+  static async resetPwd(req, res) {
+    if (true) {
+      return res.status(500).send(response("Password reset failed", {}, false));
+    }
+    try {
+      const { email, password } = req.body;
+
+      // check if user exit
+      const userExists = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      // if id do not exist print error message
+      if (!userExists)
+        return res
+          .status(500)
+          .send(response(" User with the given ID does not exists", {}, false));
+
+      // check if user is verified
+
+      // if password is provided then bcrypt password
+      password ? (password = bcrypt.hashSync(password, 10)) : null;
+
+      // update user username, email, phone, password
+      const user = await User.update(
+        {
+          password: password,
+        },
+        { where: { id: id } }
+      );
+
+      if (!user) {
+        return res
+          .status(500)
+          .send(response("The user can not be updated", {}, false));
+      }
+
+      return res.send(response("User was successfully updated", user));
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send("server error");
     }
   }
 }

@@ -1,26 +1,28 @@
 const express = require("express");
+const app = express();
 const users = require("./routes/users");
+const auth = require("./routes/auth");
 const cors = require("cors");
 
 // database
 const db = require("./db/db");
 
-const app = express();
 var corsOptions = {
   origin: "http://localhost:8081",
 };
 
 // middleware
-app.use(cors(corsOptions));
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
-app.use("/users", users);
+app.use("/api/users", users);
+app.use("/api/auth", auth);
 
-// simple route
+// remove before deploy
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
@@ -31,7 +33,7 @@ db.sync({ force: true }).then(() => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Now runnig on localhost ${PORT}.`);
 });

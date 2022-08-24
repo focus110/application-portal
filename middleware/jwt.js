@@ -4,7 +4,7 @@ const response = require("./response");
 
 const authUser = (req, res, next) => {
   //Find jwt in header
-  const token = req.headers["authorization"];
+  const token = req.headers["x-auth-token"];
 
   if (!token) {
     return res.status(403).send(response("Please login", {}, false));
@@ -12,8 +12,8 @@ const authUser = (req, res, next) => {
 
   try {
     //Verify jwt token
-    const tokenBody = token.slice(7);
-    console.log(tokenBody);
+    // const tokenBody = token.slice(7);
+    // console.log(tokenBody);
     jwt.verify(token, secret, (error, user) => {
       if (error) {
         console.log("Jwt Error:", error.message);
@@ -23,7 +23,9 @@ const authUser = (req, res, next) => {
       req.user = user;
       next();
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(401).json({ msg: "Token is not valid" });
+  }
 };
 
 const isAdmin = (req, res, next) => {

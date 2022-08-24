@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import background from "../img/frame2.jpg";
-import logo from "../img/logo.png";
+import background from "../../img/frame2.jpg";
+import logo from "../../img/logo.png";
 
 const LoginPage = () => {
   // const [setpassword, password] = useState("");
@@ -80,7 +80,10 @@ const LoginPage = () => {
             </div>
 
             <div className="w-full">
-              <Link to='/dashboard' className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
+              <Link
+                to="/dashboard"
+                className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition"
+              >
                 <span className="font-semibold text-white text-lg">Login</span>
               </Link>
               <Link
