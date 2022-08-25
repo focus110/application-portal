@@ -51,6 +51,10 @@ class UserController {
         return res.status(404).send(response("Faild to fetch user", {}, false));
       }
 
+      if (user.accountStatus === "notActive") {
+        return res.status(404).send(response("Invalid Credentials", {}, false));
+      }
+
       res.send(response("Fetched user successfully", user));
     } catch (err) {
       console.log(err.message);
@@ -71,67 +75,23 @@ class UserController {
         req.body;
 
       // check if input is empty
-      if (!firstname) {
-        res.status(400).send({
-          message: "Please Insert Firstname",
+      if (
+        !firstname ||
+        !lastname ||
+        !username ||
+        !gender ||
+        !phone ||
+        !email ||
+        !password
+      ) {
+        return res.status(400).send({
+          message: "Fill all fields",
         });
-
-        return;
-      }
-
-      if (!lastname) {
-        res.status(400).send({
-          message: "Please Insert Lastname",
-        });
-
-        return;
-      }
-
-      if (!username) {
-        res.status(400).send({
-          message: "Please Insert Username",
-        });
-
-        return;
-      }
-
-      if (!gender) {
-        res.status(400).send({
-          message: "Please Insert gender",
-        });
-
-        return;
-      }
-
-      if (!email) {
-        res.status(400).send({
-          message: "Please Insert Email",
-        });
-
-        return;
-      }
-
-      if (!phone) {
-        res.status(400).send({
-          message: "Please Insert Phone number",
-        });
-
-        return;
-      }
-
-      if (!password) {
-        res.status(400).send({
-          message: "Please Insert password",
-        });
-
-        return;
       }
 
       // Check if username already exists
       const usernameExists = await User.findOne({
-        where: {
-          username: username,
-        },
+        where: { username },
       });
 
       if (usernameExists)
@@ -143,9 +103,7 @@ class UserController {
 
       // Check if email already exists
       const emailExists = await User.findOne({
-        where: {
-          email: email,
-        },
+        where: { email },
       });
 
       if (emailExists)
@@ -166,10 +124,17 @@ class UserController {
         password: bcrypt.hashSync(password, 10),
       });
 
-      if (!user)
+      if (!user) {
         return res
           .status(500)
           .send(response("The user can not be created", {}, false));
+      }
+
+      const payload = {
+        id: user.id,
+        role: user.role,
+      };
+      const token = jwt.sign(payload, secret, { expiresIn: "1d" });
 
       const { id } = user;
 
@@ -208,7 +173,9 @@ class UserController {
       //   if (!e) console.log("Message sent: %s", info.messageId);
       // });
 
-      res.send(response("User was created successfully", { user, userOTPS }));
+      res.send(
+        response("User was created successfully", { user, token, userOTPS })
+      );
     } catch (err) {
       console.log(err.message);
       res.status(500).send("server error");
@@ -222,10 +189,7 @@ class UserController {
     try {
       const { profileImage, username, phone, password, courses, olevel } =
         req.body;
-      const id = req.params.id;
-
-      // check if phone is verified
-      // check if email is verified
+      const id = req.user.id;
 
       // find the id in database
       const userExists = await User.findOne({
@@ -240,6 +204,10 @@ class UserController {
           .status(500)
           .send(response(" User with the given ID does not exists", {}, false));
 
+      // check if phone is verified
+
+      // check if email is verified
+
       // if password is provided then bcrypt password
       password ? (password = bcrypt.hashSync(password, 10)) : null;
 
@@ -248,8 +216,6 @@ class UserController {
         {
           profileImage: profileImage,
           username: username,
-          email: email,
-          phone: phone,
           courses: courses,
           olevel_result: olevel,
           password: password,
@@ -315,9 +281,9 @@ class UserController {
   // Here we are not deleting the actual user but we are changing the accountStatus field of the user from active to notActive
   static async deleteUserById(req, res) {
     try {
-      const id = req.params.id;
+      const id = req.user.id;
 
-      const userExists = await User.findOne({ where: { id: id } });
+      const userExists = await User.findOne({ where: { id } });
 
       if (!userExists) {
         return res.status(404).send(response("Invalid Credentials", {}, false));
@@ -327,7 +293,7 @@ class UserController {
         {
           accountStatus: "notActive",
         },
-        { where: { id: id } }
+        { where: { id } }
       );
 
       if (!user)

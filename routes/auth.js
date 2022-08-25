@@ -40,11 +40,11 @@ router.post(
 // @route PUT api/auth
 // @desc  Update user*
 // @access Private
-router.put("/:id", [authUser], updateUserById);
+router.put("/", [authUser], updateUserById);
 
 // @route DELETE api/auth
 // @desc  Delete user account
 // @access Private
-router.delete("/:id", [authUser], deleteUserById);
+router.delete("/", [authUser], deleteUserById);
 
 module.exports = router;

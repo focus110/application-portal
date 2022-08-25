@@ -1,9 +1,67 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import background from "../../img/frame1.png";
 import logo from "../../img/logo.png";
+import AuthContext from "../../context/auth/authContext";
+import AlertContext from "../../context/alert/alertContext";
+import { useNavigate } from "react-router";
 
 const RegisterPage = () => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const goTo = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      goTo("/");
+    }
+
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
+
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    gender: "",
+    phone: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const { firstname, lastname, username, email, phone, password, password2 } =
+    user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (username === "" || email === "" || password === "") {
+      setAlert("Please enter all fields", "danger");
+    } else if (password !== password2) {
+      setAlert("Password do not match", "danger");
+    } else {
+      console.log(user);
+      register({
+        firstname: "admin",
+        lastname: "adm",
+        username: "adm",
+        gender: "male",
+        phone: "1234567890",
+        email: "admin@gmail.com",
+        password: "00000000",
+      });
+    }
+  };
+
   return (
     <div className="2xl:container h-screen m-auto">
       <div hidden className="fixed inset-0 w-6/12 lg:block">
@@ -23,7 +81,7 @@ const RegisterPage = () => {
             </p>
           </div>
 
-          <form action="" className="space-y-6 py-6">
+          <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -31,8 +89,10 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
+                  name="firstname"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="email"
+                  placeholder="firstname"
+                  onChange={onChange}
                 />
               </div>
               <div className="w-full">
@@ -41,8 +101,10 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
+                  name="lastname"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="lastname"
+                  onChange={onChange}
                 />
               </div>
             </div>
@@ -54,8 +116,10 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
+                  name="username"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="username"
+                  onChange={onChange}
                 />
               </div>
               <div className="w-full">
@@ -64,10 +128,12 @@ const RegisterPage = () => {
                 </label>
                 <div className="w-full relative">
                   <select
-                    class="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-3xl transition ease-in-out
+                    className="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-3xl transition ease-in-out
       m-0
       focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
                     aria-label="Default select example"
+                    // name="sex"
+                    // onChange={onChange}
                   >
                     <option value="male">choose your gender</option>
                     <option value="male">Male</option>
@@ -76,14 +142,14 @@ const RegisterPage = () => {
                   <div className="absolute top-4 right-4 w-6 text-rectem-grey">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
+                      className="h-5 w-5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </div>
@@ -100,6 +166,8 @@ const RegisterPage = () => {
                   type="email"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="email"
+                  name="email"
+                  onChange={onChange}
                 />
               </div>
               <div className="w-full">
@@ -111,6 +179,8 @@ const RegisterPage = () => {
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   placeholder="phone"
+                  name="phone"
+                  onChange={onChange}
                 />
               </div>
             </div>
@@ -123,6 +193,8 @@ const RegisterPage = () => {
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
+                name="password"
+                onChange={onChange}
               />
             </div>
 
@@ -134,6 +206,8 @@ const RegisterPage = () => {
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="confirm password"
+                name="password2"
+                onChange={onChange}
               />
             </div>
 
@@ -143,18 +217,19 @@ const RegisterPage = () => {
                 type="checkbox"
                 name="remember"
                 id="remember"
+                onChange={onChange}
               />
               <div className="absolute text-rectem-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
+                  className="h-5 w-5"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
               </div>
@@ -175,7 +250,7 @@ const RegisterPage = () => {
                 className="text-sm tracking-wide font-medium text-rectem-100"
               >
                 Already have an account?{" "}
-                <span class="text-rectem-50 no-underline hover:underline">
+                <span className="text-rectem-50 no-underline hover:underline">
                   Sign in
                 </span>
               </Link>
