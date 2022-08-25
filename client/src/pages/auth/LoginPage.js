@@ -1,12 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import background from "../../img/frame2.jpg";
 import logo from "../../img/logo.png";
 
+import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
+import Alert from "../../component/Layout/Alert";
+
 const LoginPage = () => {
-  // const [setpassword, password] = useState("");
-  // const [setusername, username] = useState("");
-  // const [setpasswordtype, passwordtype] = useState("password");
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const goTo = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      goTo("/dashboard");
+    }
+
+    if (error) {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      setAlert("Please enter all fields", "danger");
+    } else {
+      login({
+        email: email.toLowerCase(),
+        password: password,
+      });
+    }
+  };
 
   return (
     <div className="2xl:container h-screen m-auto">
@@ -14,7 +54,9 @@ const LoginPage = () => {
         <img className="w-full h-full object-cover" src={background} alt="" />
       </div>
       <div className="relative h-full ml-auto lg:w-6/12">
-        <div className="mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
+        <div className="relative mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
+          <Alert />
+
           <div className="">
             <Link to="/">
               <img src={logo} className="w-40" alt="tailus logo" />
@@ -27,16 +69,18 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <form action="" className="space-y-6 py-6">
+          <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
-                  Username
+                  Email
                 </label>
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="username or email"
+                  placeholder="email"
+                  onChange={onChange}
                 />
               </div>
             </div>
@@ -46,9 +90,11 @@ const LoginPage = () => {
                 Password
               </label>
               <input
+                name="password"
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
+                onChange={onChange}
               />
             </div>
 
@@ -61,14 +107,14 @@ const LoginPage = () => {
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 absolute text-rectem-50 check-1 text-opacity-0 transition"
+                className="h-5 w-5 absolute text-rectem-50 check-1 text-opacity-0 transition"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
               <div className="flex relative w-full">
@@ -80,18 +126,15 @@ const LoginPage = () => {
             </div>
 
             <div className="w-full">
-              <Link
-                to="/dashboard"
-                className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition"
-              >
+              <button className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
                 <span className="font-semibold text-white text-lg">Login</span>
-              </Link>
+              </button>
               <Link
                 to="/register"
                 className="text-sm tracking-wide font-medium text-rectem-100"
               >
                 Not registered yet? Create an Account{" "}
-                <span class="text-rectem-50 no-underline hover:underline">
+                <span className="text-rectem-50 no-underline hover:underline">
                   Sign up
                 </span>
               </Link>

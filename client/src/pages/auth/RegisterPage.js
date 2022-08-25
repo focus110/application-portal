@@ -5,18 +5,20 @@ import logo from "../../img/logo.png";
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 import { useNavigate } from "react-router";
+import Alert from "../../component/Layout/Alert";
 
 const RegisterPage = () => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const { register, error, clearErrors, isAuthenticated, loading } =
+    authContext;
   const goTo = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      goTo("/");
+      goTo("/dashboard");
     }
 
     if (error === "User already exists") {
@@ -37,10 +39,19 @@ const RegisterPage = () => {
     password2: "",
   });
 
-  const { firstname, lastname, username, email, phone, password, password2 } =
-    user;
+  const {
+    firstname,
+    lastname,
+    username,
+    gender,
+    email,
+    phone,
+    password,
+    password2,
+  } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onSelect = (e) => setUser({ ...user, gender: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -49,15 +60,14 @@ const RegisterPage = () => {
     } else if (password !== password2) {
       setAlert("Password do not match", "danger");
     } else {
-      console.log(user);
       register({
-        firstname: "admin",
-        lastname: "adm",
-        username: "adm",
-        gender: "male",
-        phone: "1234567890",
-        email: "admin@gmail.com",
-        password: "00000000",
+        firstname: firstname.toLowerCase(),
+        lastname: lastname.toLowerCase(),
+        username: username.toLowerCase(),
+        gender: gender,
+        phone: phone,
+        email: email.toLowerCase(),
+        password: password,
       });
     }
   };
@@ -69,6 +79,8 @@ const RegisterPage = () => {
       </div>
       <div className="relative h-full ml-auto lg:w-6/12">
         <div className="mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
+          <Alert />
+
           <div className="space-y-2">
             <Link to="/register">
               <img src={logo} className="w-40" alt="rectem logo" />
@@ -80,7 +92,6 @@ const RegisterPage = () => {
               Start your admission process
             </p>
           </div>
-
           <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
@@ -129,11 +140,9 @@ const RegisterPage = () => {
                 <div className="w-full relative">
                   <select
                     className="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-3xl transition ease-in-out
-      m-0
-      focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
+                                m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
                     aria-label="Default select example"
-                    // name="sex"
-                    // onChange={onChange}
+                    onChange={onSelect}
                   >
                     <option value="male">choose your gender</option>
                     <option value="male">Male</option>
@@ -256,7 +265,6 @@ const RegisterPage = () => {
               </Link>
             </div>
           </form>
-
           {/* <div className="pt-12">
             <div className="space-y-2 text-left">
               <span className="block text-sm tracking-wide text-gray-500">

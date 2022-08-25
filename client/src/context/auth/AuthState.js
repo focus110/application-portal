@@ -24,31 +24,32 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://localhost:5000/";
 
-  // Load User
-  // const loadUser = async () => {
-  //   // load token into global header
-  //   if (localStorage.token) {
-  //     setAuthToken(localStorage.token);
-  //   }
+  // Load User[GOOD]
+  const loadUser = async () => {
+    initialState.loading = true;
+    // load token into global header
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      const res = await axios.get(`${baseUrl}api/auth`);
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err.response.data.message
+          ? err.response.data.message
+          : err.response.data.errors[0].msg,
+      });
+    }
+  };
 
-  //   try {
-  //     const res = await axios.get(`${baseUrl}api/auth`);
-
-  //     dispatch({
-  //       type: USER_LOADED,
-  //       payload: res.data,
-  //     });
-  //   } catch (err) {
-  //     dispatch({
-  //       type: AUTH_ERROR,
-  //       payload: err,
-  //     });
-  //   }
-  // };
-
-  // Register User
+  // Register User[GOOD]
   const register = async (formData) => {
     const config = {
       headers: {
@@ -62,40 +63,50 @@ const AuthState = (props) => {
         formData,
         config
       );
-      console.log(res);
 
       dispatch({ type: REGISTER_SUCCESS, payload: res.data.data });
 
       // loadUser();
     } catch (err) {
-      dispatch({ type: REGISTER_FAIL, payload: err.response.data.message });
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.message
+          ? err.response.data.message
+          : err.response.data.errors[0].msg,
+      });
     }
   };
 
-  // Login User
-  // const login = async (formData) => {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
+  // Login User[WORING ON]
+  const login = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  //   try {
-  //     const res = await axios.post(`${baseUrl}api/auth`, formData, config);
+    try {
+      const res = await axios.post(`${baseUrl}api/auth`, formData, config);
 
-  //     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data.data });
 
-  //     loadUser();
-  //   } catch (err) {
-  //     dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
-  //   }
-  // };
+      console.log(res.data.data);
+      // loadUser();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.message
+          ? err.response.data.message
+          : err.response.data.errors[0].msg,
+      });
+    }
+  };
 
   // Logout
-  // const logOut = () => dispatch({ type: LOGOUT, payload: null });
+  const logOut = () => dispatch({ type: LOGOUT, payload: null });
 
-  // Clear Errors
-  // const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+  // Clear Errors[GOOD]
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <AuthContext.Provider
@@ -106,6 +117,10 @@ const AuthState = (props) => {
         user: state.user,
         error: state.error,
         register,
+        loadUser,
+        login,
+        clearErrors,
+        logOut,
       }}
     >
       {props.children}

@@ -268,7 +268,6 @@ class UserController {
 
       return res.send(
         response("Login successful", {
-          user: user.email,
           token: token,
         })
       );

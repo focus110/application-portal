@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-db.sync({ force: true }).then(() => {
+db.sync({ force: false }).then(() => {
   console.log("Drop and re-sync db.");
   // console.log("No re-sync db.");
 });
