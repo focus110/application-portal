@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import StuDashboardPage from "./pages/StuDashboardPage";
 import StuProfilePage from "./pages/StuProfilePage";
-import StuCourseRegPage from "./pages/StuCourseRegPage"
+import StuCoursePage from "./pages/StuCoursePage"
 import StuSettingsPage from "./pages/StuSettingsPage"
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<StuDashboardPage />} />
         <Route path="/profile" element={<StuProfilePage />} />
-        <Route path="/course" element={<StuCourseRegPage />} />
+        <Route path="/course" element={<StuCoursePage />} />
         <Route path="/settings" element={<StuSettingsPage />} />
       </Routes>
     </Router>

@@ -5,7 +5,9 @@ import {
     BookOpenIcon,
     CogIcon,
     LogoutIcon,
-    StopIcon
+    StopIcon,
+    PencilIcon,
+    CheckCircleIcon
 } from '@heroicons/react/solid';
 
 // Sidebar Data
@@ -22,7 +24,7 @@ export const SidebarData = [
     },
     {
         icon: BookOpenIcon,
-        heading: 'Course Reg',
+        heading: 'Course',
         link: 'course',
     },
     {
@@ -41,29 +43,62 @@ export const NotificationData = [
     {
         icon: StopIcon,
         sender: 'RECTOR',
-        message: "Message:  Hy {name} Welcome to Redeemer’s College of Technology and Management.",
+        message: "Message: Hey {name} Welcome to Redeemer’s College of Technology and Management.",
         time: '18min',
-        style: '#25CD6B',
+        style: 'text-rectem-green h-3 w-3',
     },
     {
         icon: StopIcon,
         sender: 'RECTOR',
-        message: "Alert:  New card added this week check em out.",
+        message: "Alert: New card added this week check em out.",
         time: '34min',
-        style: '#25CD6B',
+        style: 'text-rectem-green h-3 w-3',
     },
     {
         icon: StopIcon,
         sender: 'RECTOR',
-        message: "Promotion:  Get 13% the price when you exchange bitcoin to cash.",
+        message: "Promotion: Get 13% the price when you exchange bitcoin to cash.",
         time: '1hour',
-        style: '#FF3D72',
+        style: 'text-rectem-green h-3 w-3',
     },
     {
         icon: StopIcon,
         sender: 'SCHOOL ADMIN',
-        message: "Alert:  Sorry to see you go. You just unsubscribe from the newsletter.",
+        message: "Alert: Sorry to see you go. You just unsubscribe from the newsletter.",
         time: '2hour',
-        style: '#FFBE57',
+        style: 'text-rectem-green h-3 w-3',
+    },
+];
+
+export const FormHeader = [
+    {
+        icon: '',
+        check: CheckCircleIcon,
+        header: 'Student data form',
+        edit: PencilIcon,
+    },
+    {
+        icon: '',
+        check: CheckCircleIcon,
+        header: 'Academic Certificate form',
+        edit: PencilIcon,
+    },
+    {
+        icon: '',
+        check: CheckCircleIcon,
+        header: 'Student bio',
+        edit: PencilIcon,
+    },
+    {
+        icon: '',
+        check: CheckCircleIcon,
+        header: 'Medical report',
+        edit: PencilIcon,
+    },
+    {
+        icon: '',
+        check: CheckCircleIcon,
+        header: 'Payment',
+        edit: PencilIcon,
     },
 ];
