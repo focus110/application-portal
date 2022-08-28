@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const course = require("./routes/course");
 const cors = require("cors");
 
 // database
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // ROUTES
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/course", course);
 
 // remove before deploy
 app.get("/", (req, res) => {

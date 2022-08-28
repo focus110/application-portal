@@ -1,14 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const User = require("../models/User");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const config = require("config");
 const { authUser, isAdmin } = require("../middleware/jwt");
 const {
   listUsers,
-  createUser,
   updateUserById,
   loginUser,
   deleteUserById,

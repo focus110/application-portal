@@ -17,24 +17,26 @@ import {
 const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null,
+    isAuthenticated: false,
     loading: true,
     user: null,
     error: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
+
   const baseUrl = "http://localhost:5000/";
 
-  // Load User[GOOD]
+  // Load User
   const loadUser = async () => {
-    initialState.loading = true;
     // load token into global header
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
+
     try {
       const res = await axios.get(`${baseUrl}api/auth`);
+
       dispatch({
         type: USER_LOADED,
         payload: res.data,
@@ -42,14 +44,12 @@ const AuthState = (props) => {
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
-        payload: err.response.data.message
-          ? err.response.data.message
-          : err.response.data.errors[0].msg,
+        payload: err.response.data.msg,
       });
     }
   };
 
-  // Register User[GOOD]
+  // Register User
   const register = async (formData) => {
     const config = {
       headers: {
@@ -58,26 +58,17 @@ const AuthState = (props) => {
     };
 
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/users`,
-        formData,
-        config
-      );
+      const res = await axios.post(`${baseUrl}api/users`, formData, config);
 
-      dispatch({ type: REGISTER_SUCCESS, payload: res.data.data });
+      dispatch({ type: REGISTER_SUCCESS, payload: res.data });
 
-      // loadUser();
+      loadUser();
     } catch (err) {
-      dispatch({
-        type: REGISTER_FAIL,
-        payload: err.response.data.message
-          ? err.response.data.message
-          : err.response.data.errors[0].msg,
-      });
+      dispatch({ type: REGISTER_FAIL, payload: err.response.data.msg });
     }
   };
 
-  // Login User[WORING ON]
+  // Login User
   const login = async (formData) => {
     const config = {
       headers: {
@@ -88,24 +79,18 @@ const AuthState = (props) => {
     try {
       const res = await axios.post(`${baseUrl}api/auth`, formData, config);
 
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data.data });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 
-      console.log(res.data.data);
-      // loadUser();
+      loadUser();
     } catch (err) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: err.response.data.message
-          ? err.response.data.message
-          : err.response.data.errors[0].msg,
-      });
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
     }
   };
 
   // Logout
   const logOut = () => dispatch({ type: LOGOUT, payload: null });
 
-  // Clear Errors[GOOD]
+  // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
@@ -119,8 +104,8 @@ const AuthState = (props) => {
         register,
         loadUser,
         login,
-        clearErrors,
         logOut,
+        clearErrors,
       }}
     >
       {props.children}

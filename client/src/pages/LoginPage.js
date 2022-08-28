@@ -1,52 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import background from "../../img/frame2.jpg";
-import logo from "../../img/logo.png";
-
-import AlertContext from "../../context/alert/alertContext";
-import AuthContext from "../../context/auth/authContext";
-import Alert from "../../component/Layout/Alert";
+import React from "react";
+import { Link } from "react-router-dom";
+import background from "../img/frame2.jpg";
+import logo from "../img/logo.png";
 
 const LoginPage = () => {
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
-
-  const { setAlert } = alertContext;
-  const { login, error, clearErrors, isAuthenticated } = authContext;
-  const goTo = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      goTo("/dashboard");
-    }
-
-    if (error) {
-      setAlert(error, "danger");
-      clearErrors();
-    }
-    // eslint-disable-next-line
-  }, [error, isAuthenticated]);
-
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = user;
-
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (email === "" || password === "") {
-      setAlert("Please enter all fields", "danger");
-    } else {
-      login({
-        email: email.toLowerCase(),
-        password: password,
-      });
-    }
-  };
+  // const [setpassword, password] = useState("");
+  // const [setusername, username] = useState("");
+  // const [setpasswordtype, passwordtype] = useState("password");
 
   return (
     <div className="2xl:container h-screen m-auto">
@@ -54,9 +14,7 @@ const LoginPage = () => {
         <img className="w-full h-full object-cover" src={background} alt="" />
       </div>
       <div className="relative h-full ml-auto lg:w-6/12">
-        <div className="relative mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
-          <Alert />
-
+        <div className="mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
           <div className="">
             <Link to="/">
               <img src={logo} className="w-40" alt="tailus logo" />
@@ -69,18 +27,16 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <form onSubmit={onSubmit} className="space-y-6 py-6">
+          <form action="" className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
-                  Email
+                  Username
                 </label>
                 <input
-                  type="email"
-                  name="email"
+                  type="text"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="email"
-                  onChange={onChange}
+                  placeholder="username or email"
                 />
               </div>
             </div>
@@ -90,11 +46,9 @@ const LoginPage = () => {
                 Password
               </label>
               <input
-                name="password"
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
-                onChange={onChange}
               />
             </div>
 
@@ -126,9 +80,12 @@ const LoginPage = () => {
             </div>
 
             <div className="w-full">
-              <button className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
+              <Link
+                to="/dashboard"
+                className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition"
+              >
                 <span className="font-semibold text-white text-lg">Login</span>
-              </button>
+              </Link>
               <Link
                 to="/register"
                 className="text-sm tracking-wide font-medium text-rectem-100"

@@ -20,7 +20,7 @@ const AlertState = (props) => {
     setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
   };
 
-  const clearAlert = (id) => {
+  const removeAlert = (id) => {
     dispatch({ type: REMOVE_ALERT, payload: id });
   };
 
@@ -29,7 +29,7 @@ const AlertState = (props) => {
       value={{
         alerts: state,
         setAlert,
-        clearAlert,
+        removeAlert,
       }}
     >
       {props.children}

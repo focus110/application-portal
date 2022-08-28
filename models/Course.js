@@ -42,6 +42,14 @@ const Course = db.define("course", {
     },
     defaultValue: "",
   },
+  user: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "",
+  },
 });
 
 // Course.hasMany()

@@ -1,20 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import "../App.css";
 import Sidebar from "../component/Sidebar/Sidebar";
 import Settings from "../component/Main/Settings";
 import Rightside from "../component/Rightside/Rightside";
-import AuthContext from "../context/auth/authContext";
 
-const StuProfilePage = () => {
-  // const authContext = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   authContext.loadUser();
-  //   // eslint-disable-next-line
-  // }, [authContext]);
+const StuSettingsPage = () => {
   return (
     <div className="h-screen flex justify-center items-center font-body tracking-tighten">
-      <div className="grid h-19/20 w-49/50 overflow-hidden grid-cols-x">
+      <div className="grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx h-19/20 w-49/50 md:overflow-hidden">
         <Sidebar index={3} />
         <Settings />
         <Rightside />
@@ -23,4 +16,4 @@ const StuProfilePage = () => {
   );
 };
 
-export default StuProfilePage;
+export default StuSettingsPage;

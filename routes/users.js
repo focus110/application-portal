@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { check } = require("express-validator");
 // const upload = multer({ dest: "uploads/" });
-
 const { createUser, resetPwd } = require("../controllers/userController");
 
 // @route POST api/users

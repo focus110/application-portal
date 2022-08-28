@@ -1,24 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import background from "../../img/frame1.png";
-import logo from "../../img/logo.png";
-import AuthContext from "../../context/auth/authContext";
-import AlertContext from "../../context/alert/alertContext";
-import { useNavigate } from "react-router";
-import Alert from "../../component/Layout/Alert";
+import background from "../img/frame1.png";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../img/logo.png";
+import AuthContext from "../context/auth/authContext";
+import AlertContext from "../context/alert/alertContext";
+import Alert from "../component/Main/Alert";
 
 const RegisterPage = () => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated, loading } =
-    authContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
   const goTo = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      goTo("/dashboard");
+      goTo("/home");
     }
 
     if (error === "User already exists") {
@@ -33,8 +31,8 @@ const RegisterPage = () => {
     lastname: "",
     username: "",
     gender: "",
-    phone: "",
     email: "",
+    phone: "",
     password: "",
     password2: "",
   });
@@ -55,8 +53,17 @@ const RegisterPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (username === "" || email === "" || password === "") {
-      setAlert("Please enter all fields", "danger");
+    if (
+      firstname === "" ||
+      lastname === "" ||
+      username === "" ||
+      gender === "" ||
+      email === "" ||
+      phone === "" ||
+      password === "" ||
+      password2 === ""
+    ) {
+      setAlert("Please enter all fields", "red");
     } else if (password !== password2) {
       setAlert("Password do not match", "danger");
     } else {
@@ -65,8 +72,8 @@ const RegisterPage = () => {
         lastname: lastname.toLowerCase(),
         username: username.toLowerCase(),
         gender: gender,
+        email: email.toLocaleLowerCase(),
         phone: phone,
-        email: email.toLowerCase(),
         password: password,
       });
     }
@@ -79,8 +86,6 @@ const RegisterPage = () => {
       </div>
       <div className="relative h-full ml-auto lg:w-6/12">
         <div className="mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
-          <Alert />
-
           <div className="space-y-2">
             <Link to="/register">
               <img src={logo} className="w-40" alt="rectem logo" />
@@ -92,6 +97,9 @@ const RegisterPage = () => {
               Start your admission process
             </p>
           </div>
+
+          <Alert />
+
           <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
@@ -100,9 +108,8 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="firstname"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="firstname"
+                  placeholder="email"
                   onChange={onChange}
                 />
               </div>
@@ -112,7 +119,6 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="lastname"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="lastname"
                   onChange={onChange}
@@ -127,7 +133,6 @@ const RegisterPage = () => {
                 </label>
                 <input
                   type="text"
-                  name="username"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="username"
                   onChange={onChange}
@@ -139,8 +144,7 @@ const RegisterPage = () => {
                 </label>
                 <div className="w-full relative">
                   <select
-                    className="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-3xl transition ease-in-out
-                                m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
+                    className="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-3xl transition ease-in-out m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
                     aria-label="Default select example"
                     onChange={onSelect}
                   >
@@ -175,7 +179,6 @@ const RegisterPage = () => {
                   type="email"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="email"
-                  name="email"
                   onChange={onChange}
                 />
               </div>
@@ -188,7 +191,6 @@ const RegisterPage = () => {
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   placeholder="phone"
-                  name="phone"
                   onChange={onChange}
                 />
               </div>
@@ -202,7 +204,6 @@ const RegisterPage = () => {
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
-                name="password"
                 onChange={onChange}
               />
             </div>
@@ -212,10 +213,9 @@ const RegisterPage = () => {
                 Confirm Password
               </label>
               <input
-                type="password"
+                type="password2"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="confirm password"
-                name="password2"
                 onChange={onChange}
               />
             </div>
@@ -265,6 +265,7 @@ const RegisterPage = () => {
               </Link>
             </div>
           </form>
+
           {/* <div className="pt-12">
             <div className="space-y-2 text-left">
               <span className="block text-sm tracking-wide text-gray-500">
