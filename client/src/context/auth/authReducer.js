@@ -10,6 +10,7 @@ import {
 } from "../types";
 
 const auth = (state, action) => {
+  console.log("action: ", action);
   switch (action.type) {
     case USER_LOADED:
       return {

@@ -16,7 +16,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      goTo("/home");
+      goTo("/dashboard");
     }
 
     if (error === "User already exists") {
@@ -67,6 +67,7 @@ const RegisterPage = () => {
     } else if (password !== password2) {
       setAlert("Password do not match", "danger");
     } else {
+      console.log(user);
       register({
         firstname: firstname.toLowerCase(),
         lastname: lastname.toLowerCase(),
@@ -107,9 +108,10 @@ const RegisterPage = () => {
                   Firstname
                 </label>
                 <input
+                  name="firstname"
                   type="text"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="email"
+                  placeholder="firstname"
                   onChange={onChange}
                 />
               </div>
@@ -118,6 +120,7 @@ const RegisterPage = () => {
                   Lastname
                 </label>
                 <input
+                  name="lastname"
                   type="text"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="lastname"
@@ -132,6 +135,7 @@ const RegisterPage = () => {
                   Username
                 </label>
                 <input
+                  name="username"
                   type="text"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="username"
@@ -176,6 +180,7 @@ const RegisterPage = () => {
                   Email
                 </label>
                 <input
+                  name="email"
                   type="email"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="email"
@@ -187,6 +192,7 @@ const RegisterPage = () => {
                   Phone
                 </label>
                 <input
+                  name="phone"
                   type="number"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
@@ -201,6 +207,7 @@ const RegisterPage = () => {
                 Password
               </label>
               <input
+                name="password"
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
@@ -213,7 +220,8 @@ const RegisterPage = () => {
                 Confirm Password
               </label>
               <input
-                type="password2"
+                name="password2"
+                type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="confirm password"
                 onChange={onChange}

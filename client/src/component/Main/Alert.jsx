@@ -14,7 +14,7 @@ const Alert = () => {
     alertContext.alerts.map((alert) => (
       <div
         key={alert.id}
-        className={`bg-red-400 flex justify-between text-white p-2 alert-${alert.type}`}
+        className={`bg-red-500 flex justify-between text-white p-2 alert-${alert.type}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
