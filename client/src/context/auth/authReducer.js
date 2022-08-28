@@ -1,3 +1,4 @@
+import setAuthToken from "../../utils/setAuthToken";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -35,6 +36,7 @@ const auth = (state, action) => {
     case LOGIN_FAIL:
     case LOGOUT:
       localStorage.removeItem("token");
+      setAuthToken("");
       return {
         ...state,
         token: null,

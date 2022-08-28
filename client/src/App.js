@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./component/routing/ProtectedRoute";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -20,10 +21,12 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/dashboard" element={<StuDashboardPage />} />
-            <Route path="/profile" element={<StuProfilePage />} />
-            <Route path="/course" element={<StuCoursePage />} />
-            <Route path="/settings" element={<StuSettingsPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<StuDashboardPage />} />
+              <Route path="/profile" element={<StuProfilePage />} />
+              <Route path="/course" element={<StuCoursePage />} />
+              <Route path="/settings" element={<StuSettingsPage />} />
+            </Route>
           </Routes>
         </Router>
       </AlertState>

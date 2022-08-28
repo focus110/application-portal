@@ -4,10 +4,20 @@ import Logo from "../../img/logo.png";
 import { SidebarData } from "../Data/Data";
 import { Link } from "react-router-dom";
 import { MenuIcon } from "@heroicons/react/outline";
+import { useContext } from "react";
+import AuthContext from "../../context/auth/authContext";
 
 const Sidebar = (props) => {
   const [active, setActive] = useState(props.index);
   const [expanded, setexpanded] = useState(false);
+  const [heading, setHeading] = useState("");
+
+  const authContext = useContext(AuthContext);
+  const { logOut } = authContext;
+
+  const logout = () => {
+    if (heading === "logout") logOut();
+  };
 
   return (
     <>
@@ -45,6 +55,8 @@ const Sidebar = (props) => {
                     : "flex items-center gap-6 h-16 rounded-lg cursor-pointer p-6 bg-white text-rectem-50"
                 }
                 onClick={() => {
+                  setHeading(menu.heading);
+                  logout();
                   setActive(index);
                   setexpanded(!expanded);
                 }}
