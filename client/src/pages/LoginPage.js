@@ -1,12 +1,53 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import e from "cors";
+import { check } from "express-validator";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Alert from "../component/Main/Alert";
+import AlertContext from "../context/alert/alertContext";
+import AuthContext from "../context/auth/authContext";
 import background from "../img/frame2.jpg";
 import logo from "../img/logo.png";
 
 const LoginPage = () => {
-  // const [setpassword, password] = useState("");
-  // const [setusername, username] = useState("");
-  // const [setpasswordtype, passwordtype] = useState("password");
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const goTo = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      goTo("/dashboard");
+    }
+
+    if (error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      setAlert("Please enter all fields", "red");
+    } else {
+      login({
+        email: email.toLocaleLowerCase(),
+        password: password,
+      });
+    }
+  };
 
   return (
     <div className="2xl:container h-screen m-auto">
@@ -26,17 +67,19 @@ const LoginPage = () => {
               login to your account
             </p>
           </div>
-
-          <form action="" className="space-y-6 py-6">
+          <Alert />
+          <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
                   Username
                 </label>
                 <input
+                  name="email"
                   type="text"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="username or email"
+                  onChange={onChange}
                 />
               </div>
             </div>
@@ -46,9 +89,11 @@ const LoginPage = () => {
                 Password
               </label>
               <input
+                name="password"
                 type="password"
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
+                onChange={onChange}
               />
             </div>
 
@@ -58,6 +103,7 @@ const LoginPage = () => {
                 type="checkbox"
                 name="remember"
                 id="check-box-1"
+                onChange={onChange}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,12 +126,9 @@ const LoginPage = () => {
             </div>
 
             <div className="w-full">
-              <Link
-                to="/dashboard"
-                className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition"
-              >
+              <button className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
                 <span className="font-semibold text-white text-lg">Login</span>
-              </Link>
+              </button>
               <Link
                 to="/register"
                 className="text-sm tracking-wide font-medium text-rectem-100"

@@ -98,7 +98,7 @@ class UserController {
         return res
           .status(500)
           .send(
-            response(" User with the given username already exists", {}, false)
+            response("User with the given username already exists", {}, false)
           );
 
       // Check if email already exists
@@ -177,7 +177,6 @@ class UserController {
         response("User was created successfully", { user, token, userOTPS })
       );
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("server error");
     }
   }
@@ -266,11 +265,7 @@ class UserController {
       };
       const token = jwt.sign(payload, secret, { expiresIn: "1d" });
 
-      return res.send(
-        response("Login successful", {
-          token: token,
-        })
-      );
+      return res.send(response("Login successful", { user, token }));
     } catch (err) {
       console.log(err.message);
       res.status(500).send("server error");

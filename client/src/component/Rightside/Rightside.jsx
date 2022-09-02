@@ -1,6 +1,6 @@
 // Imports
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Rightside.css";
 import { NotificationData } from "../Data/Data";
@@ -13,6 +13,7 @@ import { ChevronDownIcon } from "@heroicons/react/outline";
 import image from "../../img/frame1.png";
 import frame from "../../img/frame3.png";
 import AdmissionStatus from "./AdmissionStatus";
+import AuthContext from "../../context/auth/authContext";
 
 const Rightside = () => {
   // State for dropdown button
@@ -24,6 +25,15 @@ const Rightside = () => {
   // eslint-disable-next-line
   const updateNotification = (newNotification) => {
     SetNotData(...NotData);
+  };
+
+  const authContext = useContext(AuthContext);
+  const { logOut } = authContext;
+  const goTo = useNavigate();
+
+  const logoutUser = () => {
+    logOut();
+    goTo("/");
   };
 
   return (
@@ -110,9 +120,12 @@ const Rightside = () => {
               Need help?
             </Link>
             <hr />
-            <Link className="text-black py-3 pl-10" to="/">
+            <div
+              className="cursor-pointer text-black py-3 pl-10"
+              onClick={() => logoutUser()}
+            >
               Logout
-            </Link>
+            </div>
           </div>
         </div>
       </div>

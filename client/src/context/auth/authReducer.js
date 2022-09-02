@@ -11,7 +11,8 @@ import {
 } from "../types";
 
 const auth = (state, action) => {
-  console.log("action: ", action);
+  // console.log(state);
+  // console.log("action: \n", action);
   switch (action.type) {
     case USER_LOADED:
       return {
@@ -19,14 +20,16 @@ const auth = (state, action) => {
         isAuthenticated: true,
         loading: false,
         user: action.payload,
+        error: null,
       };
 
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
+      setAuthToken(action.payload.token);
       return {
         ...state,
-        ...action.payload,
+        token: action.payload.token,
         isAuthenticated: true,
         loading: false,
       };

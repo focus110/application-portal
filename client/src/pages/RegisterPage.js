@@ -19,7 +19,7 @@ const RegisterPage = () => {
       goTo("/dashboard");
     }
 
-    if (error === "User already exists") {
+    if (error === "User with the given username already exists") {
       setAlert(error, "danger");
       clearErrors();
     }

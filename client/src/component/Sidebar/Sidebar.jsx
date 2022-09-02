@@ -10,13 +10,14 @@ import AuthContext from "../../context/auth/authContext";
 const Sidebar = (props) => {
   const [active, setActive] = useState(props.index);
   const [expanded, setexpanded] = useState(false);
-  const [heading, setHeading] = useState("");
 
   const authContext = useContext(AuthContext);
   const { logOut } = authContext;
 
-  const logout = () => {
-    if (heading === "logout") logOut();
+  const logoutUser = (title) => {
+    if (title === "Logout") {
+      logOut();
+    }
   };
 
   return (
@@ -55,8 +56,7 @@ const Sidebar = (props) => {
                     : "flex items-center gap-6 h-16 rounded-lg cursor-pointer p-6 bg-white text-rectem-50"
                 }
                 onClick={() => {
-                  setHeading(menu.heading);
-                  logout();
+                  logoutUser(menu.heading);
                   setActive(index);
                   setexpanded(!expanded);
                 }}

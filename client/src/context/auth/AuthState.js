@@ -36,15 +36,14 @@ const AuthState = (props) => {
 
     try {
       const res = await axios.get(`${baseUrl}api/auth`);
-
       dispatch({
         type: USER_LOADED,
-        payload: res.data,
+        payload: res.data.data,
       });
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
-        payload: err.response.data.msg,
+        payload: err.response.data.message,
       });
     }
   };
@@ -63,8 +62,9 @@ const AuthState = (props) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data.data });
 
       // loadUser();
+      // am not loading user here because by default res return user
     } catch (err) {
-      dispatch({ type: REGISTER_FAIL, payload: err.response.data.msg });
+      dispatch({ type: REGISTER_FAIL, payload: err.response.data.message });
     }
   };
 
@@ -79,16 +79,19 @@ const AuthState = (props) => {
     try {
       const res = await axios.post(`${baseUrl}api/auth`, formData, config);
 
-      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data.data });
 
-      loadUser();
+      // loadUser();
+      // am not loading user here because by default res return user
     } catch (err) {
-      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.message });
     }
   };
 
   // Logout
-  const logOut = () => dispatch({ type: LOGOUT, payload: null });
+  const logOut = () => {
+    dispatch({ type: LOGOUT, payload: null });
+  };
 
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });

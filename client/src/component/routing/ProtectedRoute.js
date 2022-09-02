@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router";
 import AuthContext from "../../context/auth/authContext";
 
-const ProtectedRoute = ({ user, children }) => {
+const ProtectedRoute = ({ children }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, loading } = authContext;
 
