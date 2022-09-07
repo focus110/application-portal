@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const avatar = require("./routes/avatar");
 const course = require("./routes/course");
 const cors = require("cors");
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // ROUTES
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/avatar", avatar);
 app.use("/api/course", course);
 
 // remove before deploy

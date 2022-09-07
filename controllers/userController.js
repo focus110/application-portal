@@ -4,15 +4,9 @@ const UserOTP = require("../models/UserOTP");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const sharp = require("sharp");
 const dotenv = require("dotenv");
 
 dotenv.config();
-
-const randImgName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
-
-// nodemailer
-const nodemailer = require("nodemailer");
 
 // Config import
 const { secret } = require("../config/dbConfig");
@@ -23,6 +17,7 @@ const {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
+  DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -254,119 +249,6 @@ class UserController {
     } catch (err) {
       console.log(err.message);
       res.status(500).send("server error");
-    }
-  }
-
-  // UPLOAD PASSPORT
-  static async uploadUserPassport(req, res) {
-    try {
-      const buffer = req.file.buffer;
-      const id = req.user.id;
-
-      const buffer_ = await sharp(buffer)
-        .resize({ height: 500, width: 500 })
-        .toBuffer();
-
-      const params = {
-        Bucket: bucketName,
-        Key: randImgName(),
-        Body: buffer_,
-        ContentType: req.file.mimetype,
-      };
-
-      const command = new PutObjectCommand(params);
-
-      await s3.send(command, (err, data) => {
-        console.log(err);
-      });
-
-      // find the id in database
-      const userExists = await User.findOne({
-        where: {
-          id,
-        },
-      });
-
-      // // if id do not exist print error message
-      if (!userExists)
-        return res
-          .status(500)
-          .send(response(" User with the given ID does not exists", {}, false));
-
-      // save image Id
-      await User.update(
-        {
-          passport: params.Key,
-        },
-        { where: { id: id } }
-      );
-      res.send("uploaded successfully");
-    } catch (error) {
-      res.status(404).send();
-    }
-  }
-
-  // DELETE PASSPORT
-  static async deleteUserPassport(req, res) {
-    try {
-      const buffer = "";
-      const id = req.user.id;
-
-      // find the id in database
-      const userExists = await User.findOne({
-        where: {
-          id,
-        },
-      });
-
-      // if id do not exist print error message
-      if (!userExists)
-        return res
-          .status(500)
-          .send(response(" User with the given ID does not exists", {}, false));
-
-      // upload passport
-      await User.update(
-        {
-          passport: buffer,
-        },
-        { where: { id: id } }
-      );
-      res.send();
-    } catch (error) {
-      res.status(404).send();
-    }
-  }
-
-  // FETCH USER PASSPORT
-  static async fetchUserPassport(req, res) {
-    try {
-      const id = req.user.id;
-
-      const user = await User.findOne({
-        attributes: { exclude: ["password"] },
-        where: { id },
-      });
-
-      if (!user) {
-        return res.status(404).send(response("Faild to fetch user", {}, false));
-      }
-
-      if (user.accountStatus === "notActive") {
-        return res.status(404).send(response("Invalid Credentials", {}, false));
-      }
-
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: user.passport,
-      };
-
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-
-      res.send(url);
-    } catch (error) {
-      res.status(404).send();
     }
   }
 

@@ -112,14 +112,6 @@ const User = db.define("users", {
     },
     defaultValue: "",
   },
-  passport: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "defaultImageUrl",
-  },
 
   // BREAK
   role: {
