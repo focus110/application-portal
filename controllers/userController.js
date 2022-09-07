@@ -3,16 +3,41 @@ const User = require("../models/User");
 const UserOTP = require("../models/UserOTP");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const crypto = require("crypto");
+const sharp = require("sharp");
+const dotenv = require("dotenv");
 
-const multer = require("multer");
+dotenv.config();
+
+const randImgName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
 // nodemailer
 const nodemailer = require("nodemailer");
 
 // Config import
 const { secret } = require("../config/dbConfig");
-const { validationResult } = require("express-validator");
+const { validationResult, param } = require("express-validator");
+
+// s3 setup
+const {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
+});
 
 class UserController {
   // GET ALL USERS
@@ -57,7 +82,7 @@ class UserController {
 
       res.send(response("Fetched user successfully", user));
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
       res.status(500).send("server error");
     }
   }
@@ -183,11 +208,8 @@ class UserController {
 
   // UPDATE USER BY ID
   static async updateUserById(req, res) {
-    const file = req.file;
-
     try {
-      const { profileImage, username, phone, password, courses, olevel } =
-        req.body;
+      const { passport, username, phone, password, courses, olevel } = req.body;
       const id = req.user.id;
 
       // find the id in database
@@ -213,7 +235,7 @@ class UserController {
       // update user username, email, phone, password
       const user = await User.update(
         {
-          profileImage: profileImage,
+          passport: passport,
           username: username,
           courses: courses,
           olevel_result: olevel,
@@ -232,6 +254,124 @@ class UserController {
     } catch (err) {
       console.log(err.message);
       res.status(500).send("server error");
+    }
+  }
+
+  // UPLOAD PASSPORT
+  static async uploadUserPassport(req, res) {
+    try {
+      const buffer = req.file.buffer;
+      const id = req.user.id;
+
+      const buffer_ = await sharp(buffer)
+        .resize({ height: 500, width: 500 })
+        .toBuffer();
+
+      const params = {
+        Bucket: bucketName,
+        Key: randImgName(),
+        Body: buffer_,
+        ContentType: req.file.mimetype,
+      };
+
+      const command = new PutObjectCommand(params);
+
+      await s3.send(command, (err, data) => {
+        console.log(err);
+      });
+
+      // find the id in database
+      const userExists = await User.findOne({
+        where: {
+          id,
+        },
+      });
+
+      // // if id do not exist print error message
+      if (!userExists)
+        return res
+          .status(500)
+          .send(response(" User with the given ID does not exists", {}, false));
+
+      // save image Id
+      await User.update(
+        {
+          passport: params.Key,
+        },
+        { where: { id: id } }
+      );
+      res.send("uploaded successfully");
+    } catch (error) {
+      res.status(404).send();
+    }
+  }
+
+  // DELETE PASSPORT
+  static async deleteUserPassport(req, res) {
+    try {
+      const buffer = "";
+      const id = req.user.id;
+
+      // find the id in database
+      const userExists = await User.findOne({
+        where: {
+          id,
+        },
+      });
+
+      // if id do not exist print error message
+      if (!userExists)
+        return res
+          .status(500)
+          .send(response(" User with the given ID does not exists", {}, false));
+
+      // upload passport
+      await User.update(
+        {
+          passport: buffer,
+        },
+        { where: { id: id } }
+      );
+      res.send();
+    } catch (error) {
+      res.status(404).send();
+    }
+  }
+
+  // FETCH USER PASSPORT
+  static async fetchUserPassport(req, res) {
+    // console.log(req.params.id);
+    try {
+      const params = {
+        Bucket: bucketName,
+        Key: randImgName(),
+      };
+
+      // const client = new S3Client(clientParams);
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(client, command, { expiresIn: 3600 });
+
+      const id = req.params.id;
+      // const id_ = req.user.id;
+
+      const user = await User.findOne({
+        attributes: { exclude: ["password"] },
+        where: { id },
+      });
+
+      if (!user) {
+        return res.status(404).send(response("Faild to fetch user", {}, false));
+      }
+
+      if (user.accountStatus === "notActive") {
+        return res.status(404).send(response("Invalid Credentials", {}, false));
+      }
+
+      // get user passport
+      res.set("Content-Type", "image/jpg");
+      res.send(user.passport);
+    } catch (error) {
+      res.status(404).send();
     }
   }
 

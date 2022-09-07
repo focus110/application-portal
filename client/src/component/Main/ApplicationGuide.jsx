@@ -10,7 +10,7 @@ const ApplicationGuide = () => {
       >
         2022/2023 ADMISSION IN PROGRESS -
       </h3>
-      <div className="text-rectem-grey mb-2">
+      <div className="text-rectem-grey mb-5">
         <p className="text-sm text-gray-500 mb-3">
           Redeemer’s College of Technology and Management invites you to apply
           to our full-time National Diploma (ND) and Higher National Diploma
@@ -30,7 +30,8 @@ const ApplicationGuide = () => {
           upload the soft coppies
         </p>
       </div>
-      <Button />
+      <Button name="Start application" path="/profile" buttonType={`danger`} />
+      <Button name="Change username" path="/settings" buttonType={`light`} />
     </div>
   );
 };

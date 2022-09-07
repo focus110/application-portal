@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../context/auth/authContext";
 
 const AdmissionStatus = () => {
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   return (
     <div>
       <h3 className="text-xs">
-        {true ? (
-          <span className="bg-green-400 text-black py-1 px-1 rounded-md">
-            Admitted
-          </span>
-        ) : (
-          <span className="bg-red-400 text-black py-1 px-1 rounded-md">
-            Not Admitted
-          </span>
-        )}
+        <span
+          className={
+            user?.admissionStatus === "not admitted"
+              ? "bg-red-600 text-white py-1 px-1 rounded-md"
+              : "bg-green-600 text-white py-1 px-1 rounded-md"
+          }
+        >
+          {user?.admissionStatus}
+        </span>
       </h3>
     </div>
   );

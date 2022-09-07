@@ -72,14 +72,15 @@ const LoginPage = () => {
             <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
-                  Username
+                  Email
                 </label>
                 <input
                   name="email"
-                  type="text"
+                  type="email"
                   className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder="username or email"
+                  placeholder="email"
                   onChange={onChange}
+                  required
                 />
               </div>
             </div>

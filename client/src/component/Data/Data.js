@@ -104,3 +104,24 @@ export const FormHeader = [
     edit: PencilIcon,
   },
 ];
+
+export const allCourse = [
+  {
+    title: "Introduction to Java",
+    code: "gns101",
+    units: "3",
+    department: "Computer Science",
+  },
+  {
+    title: "Architecture",
+    code: "gns201",
+    units: "3",
+    department: "Architecture",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+];

@@ -118,7 +118,7 @@ const User = db.define("users", {
     validator: {
       notEmpty: true,
     },
-    defaultValue: "",
+    defaultValue: "defaultImageUrl",
   },
 
   // BREAK
@@ -137,6 +137,14 @@ const User = db.define("users", {
       notEmpty: true,
     },
     defaultValue: "active",
+  },
+  admissionStatus: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "not admitted",
   },
   verified: {
     type: Sequelize.BOOLEAN,
