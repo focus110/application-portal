@@ -37,7 +37,7 @@ router.post(
 );
 
 // @route FETCH api/avatar
-// @desc  get passport
+// @desc get avatar
 // @access Private
 router.get("/", [authUser], fetchAvatar);
 

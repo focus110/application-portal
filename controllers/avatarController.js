@@ -49,7 +49,18 @@ class AvatarController {
       if (!user)
         return res
           .status(500)
-          .send(response(" User with the given ID does not exists", {}, false));
+          .send(response("User with the given ID does not exists", {}, false));
+
+      // check if user have avatar
+      const avatar = await Avatar.findOne({
+        where: { foreign_key: id },
+      });
+
+      // // if user have avatar do not upload
+      if (avatar)
+        return res
+          .status(500)
+          .send(response("delete current avatar before upload", {}, false));
 
       const buffer_ = await sharp(buffer)
         .resize({ height: 500, width: 500 })
@@ -65,7 +76,7 @@ class AvatarController {
       const command = new PutObjectCommand(params);
 
       await s3.send(command, (err, data) => {
-        console.log(err);
+        // console.log(err);
       });
 
       // save image Id
@@ -86,8 +97,9 @@ class AvatarController {
       const id = req.user.id;
 
       const user = await User.findOne({
-        attributes: { exclude: ["password"] },
-        where: { id },
+        where: {
+          id,
+        },
       });
 
       if (!user) {
@@ -98,17 +110,22 @@ class AvatarController {
         return res.status(404).send(response("Invalid Credentials", {}, false));
       }
 
+      const avatar = await Avatar.findOne({
+        where: { foreign_key: id },
+      });
+
       const getObjectParams = {
         Bucket: bucketName,
-        Key: user.passport,
+        Key: avatar.avatar,
       };
 
       const command = new GetObjectCommand(getObjectParams);
       const url = await getSignedUrl(s3, command, { expiresIn: 60 });
 
-      res.send(url);
+      res.send({ imgUrl: url });
     } catch (error) {
-      res.status(404).send();
+      console.log(error);
+      res.status(404).send(error);
     }
   }
 
@@ -129,23 +146,29 @@ class AvatarController {
       if (!user)
         return res
           .status(500)
-          .send(response(" User with the given ID does not exists", {}, false));
+          .send(response("User with the given ID does not exists", {}, false));
+
+      // check if avatar is in db
+      const avatar = await Avatar.findOne({
+        where: {
+          id: params,
+          foreign_key: id,
+        },
+      });
+
+      if (!avatar)
+        return res.status(500).send(response("upload avatar", {}, false));
 
       const getObjectParams = {
         Bucket: bucketName,
-        Key: params,
+        Key: avatar.avatar,
       };
 
       // delete image from s3 bucket
-      const commmand = new DeleteObjectCommand(getObjectParams);
+      const command = new DeleteObjectCommand(getObjectParams);
+      await s3.send(command, (err, data) => {});
 
-      // remove image Id from db
-      await User.update(
-        {
-          passport: "",
-        },
-        { where: { id: id } }
-      );
+      await avatar.destroy(); // delete avatar from db
 
       res.send({});
     } catch (error) {
