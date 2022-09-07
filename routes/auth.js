@@ -77,7 +77,7 @@ router.delete("/passport", [authUser], deleteUserPassport);
 // @route FETCH api/auth/passport
 // @desc  get passport
 // @access Private
-router.get("/passport/:id", fetchUserPassport);
+router.get("/passport", [authUser], fetchUserPassport);
 
 // @route DELETE api/auth
 // @desc  Delete user account

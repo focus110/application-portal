@@ -340,19 +340,8 @@ class UserController {
 
   // FETCH USER PASSPORT
   static async fetchUserPassport(req, res) {
-    // console.log(req.params.id);
     try {
-      const params = {
-        Bucket: bucketName,
-        Key: randImgName(),
-      };
-
-      // const client = new S3Client(clientParams);
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(client, command, { expiresIn: 3600 });
-
-      const id = req.params.id;
-      // const id_ = req.user.id;
+      const id = req.user.id;
 
       const user = await User.findOne({
         attributes: { exclude: ["password"] },
@@ -367,9 +356,15 @@ class UserController {
         return res.status(404).send(response("Invalid Credentials", {}, false));
       }
 
-      // get user passport
-      res.set("Content-Type", "image/jpg");
-      res.send(user.passport);
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: user.passport,
+      };
+
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+
+      res.send(url);
     } catch (error) {
       res.status(404).send();
     }
