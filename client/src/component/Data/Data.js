@@ -125,3 +125,9 @@ export const allCourse = [
     department: "Electrical/Electronics Engineering",
   },
 ];
+
+export const form = [
+  {
+    id: "1",
+  },
+];

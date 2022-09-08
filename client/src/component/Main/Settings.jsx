@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import image from "../../img/frame1.png";
 import AuthContext from "../../context/auth/authContext";
+import AvatarContext from "../../context/avatar/avatarContext";
 
 const Settings = () => {
   const authContext = useContext(AuthContext);
+  const avatarContext = useContext(AvatarContext);
+  const { avaUrl } = avatarContext;
   const { user } = authContext;
+
+  const [file, setFile] = useState("");
+  const [filename, setFilename] = useState("Choose File");
+
+  const onChange = (e) => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+  };
+
+  console.log(file);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("upload", file);
+  };
+
+  // console.log(avaUrl);
   return (
     <div className="p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
@@ -20,13 +41,24 @@ const Settings = () => {
             Account
           </span>
           <img
-            src={image}
+            src={avaUrl}
             alt="Profile Pic"
             className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
           />
           <button>
             <span className="font-display tracking-tighten not-italic font-medium text-lg">
-              Edit
+              <form onSubmit={onSubmit}>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  onChange={onChange}
+                />
+                <label className="cursor-pointer" htmlFor="file">
+                  {filename}
+                </label>
+              </form>
             </span>
           </button>
         </div>

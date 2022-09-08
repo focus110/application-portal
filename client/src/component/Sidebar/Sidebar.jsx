@@ -26,7 +26,7 @@ const Sidebar = (props) => {
         className="flex fixed md:hidden h-14 w-14 top-6 z-10 bg-white p-2.5 rounded-xl"
         style={expanded ? { left: "15rem" } : { left: "3%" }}
         onClick={() => setexpanded(!expanded)}
-        onMouseLeave={() => setexpanded(!expanded)}
+        // onMouseLeave={() => setexpanded(!expanded)}
       >
         <MenuIcon className="h-10 w-10 text-black" />
       </div>
