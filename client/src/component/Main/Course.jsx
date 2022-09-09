@@ -6,6 +6,7 @@ import { allCourse } from "../Data/Data";
 const CourseReg = () => {
   const [addedCourse, setAddedCourse] = useState([]);
   const [isCleared, setIsCleared] = useState(false);
+  const [search, setSearch] = useState("");
 
   const addCourse = (item) => {
     setAddedCourse([...addedCourse, item]);
@@ -15,11 +16,13 @@ const CourseReg = () => {
     setAddedCourse(removeItem);
   };
 
+  const onChange = (e) => setSearch(e.target.value);
+
   return (
-    <div className="pt-8 md:p-10 font-medium font-display flex flex-col mt-12 lg:mt-2 bg-white">
+    <div className="pt-8 md:p-10 font-medium font-display flex flex-col mt-12 lg:mt-2 bg-white overflow-y-scroll scrollbar-hide">
       <span className="not-italic tracking-tighten text-2xl text-rectem-75 text-center md:text-left">
         Course Registration
-      </span>
+      </span>{" "}
       {!isCleared ? (
         <div className="justify-between items-center">
           <div className="bg-white md:w-3/4 lg:w-5/6 h-4/5 md:h-3/4 lg:h-4/5 mt-16 p-12 shadow-box flex flex-col justify-between">
@@ -46,8 +49,27 @@ const CourseReg = () => {
           </div>
         </div>
       ) : (
-        <div className="shadow-sm overflow-hidden my-8">
-          <table className="table-auto md:table-fixed border-collapse w-full text-sm">
+        <div className="shadow-sm my-8">
+          <div className="flex justify-between mb-8">
+            <div></div>
+            <form className="flex flex-col space-y-4">
+              <div className="flex w-full space-x-4 items-center">
+                <div className="w-full">
+                  <label className="block text-sm font-medium text-rectem-100 mb-2">
+                    Search
+                  </label>
+                  <input
+                    name="search"
+                    type="text"
+                    className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+                    placeholder="search"
+                    onChange={onChange}
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <table className="table-auto md:table-auto border-collapse w-full text-sm overflow-x-scroll">
             <thead>
               <tr>
                 <th className="border-b dark:border-slate-600 font-medium p-4 pl-3 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
@@ -67,41 +89,51 @@ const CourseReg = () => {
                 </th>
               </tr>
             </thead>
-            {allCourse.map((course, i) => {
-              const isAdded = addedCourse.filter(
-                (i) => i.title === course.title
-              );
-              //   console.log("isAdded", isAdded);
-              return (
-                <tbody key={i} className="bg-white dark:bg-slate-800">
-                  <tr>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400  overflow-hidden">
-                      {course?.title}
-                    </td>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400  overflow-hidden">
-                      {course?.code}
-                    </td>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400 overflow-hidden">
-                      {course?.units}
-                    </td>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400 overflow-hidden">
-                      {course?.department}
-                    </td>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400 overflow-hidden">
-                      {isAdded.length === 0 ? (
-                        <div onClick={() => addCourse(course)}>
-                          <Button name="Add" path="#!" buttonType="light" />
-                        </div>
-                      ) : (
-                        <div onClick={() => removeCourse(course)}>
-                          <Button name="Drop" path="#!" buttonType="danger" />
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            {allCourse
+              .filter((item) => {
+                const regex = new RegExp(search, "gi");
+                return regex === ""
+                  ? item
+                  : item.title.toLocaleLowerCase().includes(search) ||
+                      item.code.match(regex) ||
+                      item.units.match(regex) ||
+                      item.department.match(regex);
+              })
+              .map((course, i) => {
+                const isAdded = addedCourse.filter(
+                  (i) => i.title === course.title
+                );
+                //   console.log("isAdded", isAdded);
+                return (
+                  <tbody key={i} className="bg-white dark:bg-slate-800">
+                    <tr>
+                      <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400">
+                        {course?.title}
+                      </td>
+                      <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400  ">
+                        {course?.code}
+                      </td>
+                      <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400 ">
+                        {course?.units}
+                      </td>
+                      <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400">
+                        {course?.department}
+                      </td>
+                      <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-3 md:pl-8 text-slate-500 dark:text-slate-400">
+                        {isAdded.length === 0 ? (
+                          <div onClick={() => addCourse(course)}>
+                            <Button name="Add" path="#!" buttonType="light" />
+                          </div>
+                        ) : (
+                          <div onClick={() => removeCourse(course)}>
+                            <Button name="Drop" path="#!" buttonType="danger" />
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
           </table>
         </div>
       )}

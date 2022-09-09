@@ -26,7 +26,7 @@ const Avatar = ({ setCurrent }) => {
       <img
         src={avaUrl}
         alt="Profile Pic"
-        className="rounded-full mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40"
+        className="bg-rectem-25 rounded-full mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40"
       />
       <form>
         <input

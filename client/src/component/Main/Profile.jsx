@@ -105,7 +105,7 @@ const Profile = () => {
           </div>
           <div className="flex space-x-8">
             {current <= 1 ? (
-              <Button name="Back" path="#!" buttonType={`light`} />
+              <Button name="Back" path="#!" buttonType={`disabled`} />
             ) : (
               <div onClick={() => setCurrent(current - 1)}>
                 <Button name="Back" path="#!" buttonType={`theme`} />
@@ -113,7 +113,7 @@ const Profile = () => {
             )}
 
             {current >= 5 ? (
-              <Button name="Next" path="#!" buttonType={`light`} />
+              <Button name="Next" path="#!" buttonType={`disabled`} />
             ) : (
               <div onClick={() => setCurrent(current + 1)}>
                 <Button name="Next" path="#!" buttonType={`theme`} />

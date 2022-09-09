@@ -131,7 +131,7 @@ const Rightside = () => {
       </div>
 
       {/* School Rising champions Image */}
-      <div className="md:p-6 hidden lg:block">
+      <div className="lg:p-6 hidden xl:block">
         {/* <div className=' pl-6 text-black font-body pt-10 font-medium text-3xl not-italic'>Rising Champions</div> */}
         <img src={frame} alt="" className="" />
       </div>

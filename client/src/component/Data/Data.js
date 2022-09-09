@@ -124,6 +124,96 @@ export const allCourse = [
     units: "3",
     department: "Electrical/Electronics Engineering",
   },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "3",
+    department: "Electrical/Electronics Engineering",
+  },
 ];
 
 export const form = [
