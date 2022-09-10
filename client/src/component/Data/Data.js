@@ -175,7 +175,13 @@ export const allCourse = [
   {
     title: "Digital Electronics",
     code: "com111",
-    units: "3",
+    units: "4",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com111",
+    units: "1",
     department: "Electrical/Electronics Engineering",
   },
   {
@@ -187,31 +193,25 @@ export const allCourse = [
   {
     title: "Digital Electronics",
     code: "com111",
+    units: "2",
+    department: "Electrical/Electronics Engineering",
+  },
+  {
+    title: "Digital Electronics",
+    code: "com202",
     units: "3",
     department: "Electrical/Electronics Engineering",
   },
   {
     title: "Digital Electronics",
-    code: "com111",
-    units: "3",
+    code: "com302",
+    units: "2",
     department: "Electrical/Electronics Engineering",
   },
   {
-    title: "Digital Electronics",
+    title: "Elect Elect",
     code: "com111",
-    units: "3",
-    department: "Electrical/Electronics Engineering",
-  },
-  {
-    title: "Digital Electronics",
-    code: "com111",
-    units: "3",
-    department: "Electrical/Electronics Engineering",
-  },
-  {
-    title: "Digital Electronics",
-    code: "com111",
-    units: "3",
+    units: "4",
     department: "Electrical/Electronics Engineering",
   },
 ];

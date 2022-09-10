@@ -56,11 +56,22 @@ class AvatarController {
         where: { foreign_key: id },
       });
 
-      // // if user have avatar do not upload
-      if (avatar)
-        return res
-          .status(500)
-          .send(response("delete current avatar before upload", {}, false));
+      // // if user have avatar delete
+      if (avatar) {
+        // return res
+        //   .status(500)
+        //   .send(response("delete current avatar before upload", {}, false));
+        const getObjectParams = {
+          Bucket: bucketName,
+          Key: avatar.avatar,
+        };
+
+        // delete image from s3 bucket
+        const command = new DeleteObjectCommand(getObjectParams);
+        await s3.send(command, (err, data) => {});
+
+        await avatar.destroy(); // delete avatar from db
+      }
 
       const buffer_ = await sharp(buffer)
         .resize({ height: 500, width: 500 })

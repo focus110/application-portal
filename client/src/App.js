@@ -11,6 +11,7 @@ import StuCoursePage from "./pages/StuCoursePage";
 import StuSettingsPage from "./pages/StuSettingsPage";
 import setAuthToken from "./utils/setAuthToken";
 import AuthContext from "./context/auth/authContext";
+import Alert from "./component/Main/Alert";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -25,6 +26,7 @@ function App() {
   }, []);
   return (
     <Router>
+      <Alert />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

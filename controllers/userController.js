@@ -204,8 +204,20 @@ class UserController {
   // UPDATE USER BY ID
   static async updateUserById(req, res) {
     try {
-      const { passport, username, phone, password, courses, olevel } = req.body;
       const id = req.user.id;
+
+      const { username, firstname, lastname, email, phone, password } =
+        req.body;
+
+      // Build user object
+      const userFields = {};
+      if (username) userFields.username = username;
+      if (firstname) userFields.firstname = firstname;
+      if (lastname) userFields.lastname = lastname;
+      if (email) userFields.email = email;
+      if (phone) userFields.phone = phone;
+      // if password is provided then bcrypt password
+      if (password) userFields.password = bcrypt.hashSync(password, 10);
 
       // find the id in database
       const userExists = await User.findOne({
@@ -224,20 +236,8 @@ class UserController {
 
       // check if email is verified
 
-      // if password is provided then bcrypt password
-      password ? (password = bcrypt.hashSync(password, 10)) : null;
-
       // update user username, email, phone, password
-      const user = await User.update(
-        {
-          passport: passport,
-          username: username,
-          courses: courses,
-          olevel_result: olevel,
-          password: password,
-        },
-        { where: { id: id } }
-      );
+      const user = await User.update(userFields, { where: { id: id } });
 
       if (!user) {
         return res
@@ -247,7 +247,6 @@ class UserController {
 
       return res.send(response("User was successfully updated", user));
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("server error");
     }
   }

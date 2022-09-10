@@ -5,13 +5,14 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
+  UPDATE_FAIL,
+  UPDATE_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
 } from "../types";
 
 const auth = (state, action) => {
-  // console.log(state);
   // console.log("action: \n", action);
   switch (action.type) {
     case USER_LOADED:
@@ -34,6 +35,18 @@ const auth = (state, action) => {
         loading: false,
       };
 
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case UPDATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
@@ -48,6 +61,7 @@ const auth = (state, action) => {
         user: null,
         error: action.payload,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,

@@ -10,6 +10,8 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  UPDATE_SUCCESS,
+  UPDATE_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
 } from "../types";
@@ -45,6 +47,26 @@ const AuthState = (props) => {
         type: AUTH_ERROR,
         payload: err.response.data.message,
       });
+    }
+  };
+
+  // Update User
+  const update = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.put(`${baseUrl}api/auth`, formData, config);
+
+      dispatch({ type: UPDATE_SUCCESS, payload: res.data.data });
+
+      loadUser();
+      // am not loading user here because by default res return user
+    } catch (err) {
+      dispatch({ type: UPDATE_FAIL, payload: err.response.data.message });
     }
   };
 
@@ -106,6 +128,7 @@ const AuthState = (props) => {
         error: state.error,
         register,
         loadUser,
+        update,
         login,
         logOut,
         clearErrors,

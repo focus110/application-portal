@@ -8,7 +8,7 @@ import { NotificationData } from "../Data/Data";
 import Notification from "./Notification";
 
 import { BellIcon } from "@heroicons/react/solid";
-import { ChevronDownIcon } from "@heroicons/react/outline";
+// import { ChevronDownIcon } from "@heroicons/react/outline";
 
 import image from "../../img/frame1.png";
 import frame from "../../img/frame3.png";
@@ -92,9 +92,11 @@ const Rightside = () => {
           >
             {/* Profile picture */}
 
-            <div className="h-10 md:h-14 w-10 md:w-14">
-              <img src={image} alt="profile pic" className=" rounded-full" />
-            </div>
+            <img
+              src={image}
+              alt="profile pic"
+              className="p-1 h-10 w-10 md:h-14 md:w-14 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+            />
 
             {/* <ChevronDownIcon className="text-black h-3 w-3" /> */}
           </button>

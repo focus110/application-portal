@@ -1,40 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import image from "../../img/frame1.png";
+import Button from "../Buttons/Button";
+
 import AuthContext from "../../context/auth/authContext";
 import AvatarContext from "../../context/avatar/avatarContext";
+import AlertContext from "../../context/alert/alertContext";
 
-const Settings = () => {
+const Settings = ({ name, setName, showModal, setShowModal }) => {
   const authContext = useContext(AuthContext);
   const avatarContext = useContext(AvatarContext);
-  const { avaUrl } = avatarContext;
-  const { user } = authContext;
+  const { avaUrl, setAvatar, getAvatar } = avatarContext;
+  const alertContext = useContext(AlertContext);
+
+  const { setAlert } = alertContext;
 
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose File");
+  const [filename, setFilename] = useState("");
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
   };
 
-  console.log(file);
+  // const [user, setUser] = useState({});
+  const { user } = authContext;
+  console.log(user);
+  useEffect(() => {
+    getAvatar();
+  }, []);
+
+  const openModal = (e) => {
+    setShowModal((prev) => !prev);
+    setName(e.target.innerText);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("upload", file);
+
+    if (file === "") {
+      setAlert("Avatar Upadated", "danger");
+    } else {
+      formData.append("upload", file);
+      setAvatar(formData);
+      setFile("");
+      setFilename("");
+      setAlert("Avatar Upadated", "success");
+    }
   };
 
   // console.log(avaUrl);
   return (
-    <div className="p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
+    <div className="relative p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
         Settings
       </span>
 
       {/* Body */}
       <div className="flex flex-col md:flex-row gap-10 md:gap-16 md:justify-evenly">
+        {/* <Modal showModal={showModal} setShowModal={setShowModal} name={name} /> */}
         {/* Profile Picture Part */}
         <div className="flex flex-col w-1/4 text-center items-center gap-3">
           <span className="not-italic font-bold tracking-tighten text-rectem-black text-2xl">
@@ -47,17 +71,35 @@ const Settings = () => {
           />
           <button>
             <span className="font-display tracking-tighten not-italic font-medium text-lg">
-              <form onSubmit={onSubmit}>
-                <input
-                  style={{ display: "none" }}
-                  type="file"
-                  id="file"
-                  accept="image/*"
-                  onChange={onChange}
-                />
-                <label className="cursor-pointer" htmlFor="file">
-                  {filename}
-                </label>
+              <form
+                onSubmit={onSubmit}
+                className="flex items-center flex-col space-y-4 text-sm"
+              >
+                <div className="w-[70%] flex mt-2 border-[1px] items-center">
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="file"
+                    accept="image/*"
+                    onChange={onChange}
+                  />
+                  <label
+                    className="w-5/12 cursor-pointer text-white bg-rectem-50 p-2"
+                    htmlFor="file"
+                  >
+                    Choose file
+                  </label>
+                  <h1 className="w-7/12 px-2 overflow-x-scroll scroll">
+                    {filename}
+                  </h1>
+                </div>
+                <button>
+                  <Button
+                    name="save image"
+                    path="#!"
+                    buttonType={"theme-btn"}
+                  />
+                </button>
               </form>
             </span>
           </button>
@@ -76,7 +118,7 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {user?.username}
                 </span>
-                <button className="text-left">
+                <button id="username" className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
                     Change Username
                   </span>
@@ -91,9 +133,9 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {user?.firstname}
                 </span>
-                <button className="text-left">
+                <button className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
-                    Change First name
+                    Change Firstname
                   </span>
                 </button>
               </div>
@@ -106,9 +148,9 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {user?.lastname}
                 </span>
-                <button className="text-left">
+                <button className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
-                    Change Last name
+                    Change Lastname
                   </span>
                 </button>
               </div>
@@ -126,7 +168,7 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {user?.phone ?? "loading..."}
                 </span>
-                <button className="text-left">
+                <button className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
                     Change Phone
                   </span>
@@ -141,7 +183,7 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {user?.email ?? "loading..."}
                 </span>
-                <button className="text-left">
+                <button className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
                     Change Email
                   </span>
@@ -156,7 +198,7 @@ const Settings = () => {
                 <span className="text-rectem-grey font-display font-normal not-italic text-base md:text-sm">
                   {"******"}
                 </span>
-                <button className="text-left">
+                <button className="text-left" onClick={openModal}>
                   <span className="text-rectem-50 font-medium not-italic text-sm md:text-base">
                     Change Password
                   </span>

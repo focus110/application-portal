@@ -1,6 +1,8 @@
 export const USER_LOADED = "USER_LOADED";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
+export const UPDATE_FAIL = "UPDATE_FAIL";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const AUTH_ERROR = "AUTH_ERROR";
@@ -13,6 +15,7 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SET_AVATAR = "SET_AVATAR";
 export const GET_AVATAR = "GET_AVATAR";
 export const REMOVE_AVATAR = "REMOVE_AVATAR";
+export const SETAVATAR_FAIL = "SETAVATAR_FAIL";
 // export const ADD_COURSE = "ADD_COURSE";
 // export const GET_COURSE = "GET_COURSE";
 // export const COURSE_ERROR = "COURSE_ERROR";
