@@ -10,12 +10,15 @@ import Notification from "./Notification";
 import { BellIcon } from "@heroicons/react/solid";
 // import { ChevronDownIcon } from "@heroicons/react/outline";
 
-import image from "../../img/frame1.png";
 import frame from "../../img/frame3.png";
 import AdmissionStatus from "./AdmissionStatus";
 import AuthContext from "../../context/auth/authContext";
+import AvatarContext from "../../context/avatar/avatarContext";
 
 const Rightside = () => {
+  const avatarContext = useContext(AvatarContext);
+  const { avaUrl } = avatarContext;
+
   // State for dropdown button
   const [arrowIsOpen, setArrowIsOpen] = useState(false);
   // State for Notification
@@ -37,7 +40,7 @@ const Rightside = () => {
   };
 
   return (
-    <div className="flex flex-col lg:sticky top-3 z-0 bg-white p-4 absolute right-0 bg-transparent">
+    <div className="hidden sm:flex flex-col lg:sticky top-3 z-0 bg-white p-4 absolute right-0 bg-transparent">
       <div className="flex flex-row gap-6 md:gap-6 md:p-4 justify-center items-center content-center">
         <AdmissionStatus />
         {/* Notification Button */}
@@ -93,7 +96,7 @@ const Rightside = () => {
             {/* Profile picture */}
 
             <img
-              src={image}
+              src={avaUrl}
               alt="profile pic"
               className="p-1 h-10 w-10 md:h-14 md:w-14 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
             />

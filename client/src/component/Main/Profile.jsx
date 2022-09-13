@@ -1,83 +1,91 @@
 import React from "react";
 import { useState } from "react";
 import Button from "../Buttons/Button";
-import { FormHeader, form } from "../Data/Data";
-import BioForm from "../Forms/BioForm";
 import FormItem from "../item/FormItem";
-//  h-72 border-l-2 border-rectem-blue
 
 const Profile = () => {
   const [current, setCurrent] = useState(1);
+  const [user, setUser] = useState({});
+  const [file, setFile] = useState("");
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = () => {
+    // ;
+    // setCurrent(current + 1);
+  };
+
+  // console.log(user);
 
   return (
-    <div className="p-10 font-medium flex flex-col mt-8 lg:mt-2 bg-white">
+    <div className="mx-0 py-12 sm:mx-10 h-max font-medium flex flex-col bg-white overflow-y-scroll scrollbar-hide">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
         Profile
       </span>
       <div className="not-italic tracking-tighten font-body py-8 text-2xl font-bold">
-        <div className="mt-14 flex flex-col">
-          <div className="flex items-center justify-between mb-12">
+        <div className="mt-5 flex flex-col">
+          <div className="flex items-center justify-between mb-12 text-[12px] sm:text-sm">
             <div className="flex items-center w-2/4 relative">
               <div
                 className={`${
                   current >= 1 ? "bg-rectem-50" : "bg-rectem-grey "
-                } transition ease-in rounded-full w-10 h-10 flex justify-center items-center text-white text-sm z-[1]`}
+                } transition ease-in rounded-full w-8 h-8 sm:w-10 sm:h-10 flex justify-center items-center text-white  z-[1]`}
               >
                 1
               </div>
               <hr
                 className={`${
                   current >= 1 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in w-full h-[4.7px] absolute`}
+                }  transition ease-in w-full h-[3px] sm:h-[4.7px] absolute`}
               />
             </div>
             <div className="flex items-center w-2/4 relative">
               <div
                 className={`${
                   current >= 2 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in rounded-full w-10 h-10 flex justify-center items-center text-white text-sm z-[1]`}
+                }  transition ease-in rounded-full w-8 h-8 sm:w-10 sm:h-10  flex justify-center items-center text-white  z-[1]`}
               >
                 2
               </div>
               <hr
                 className={`${
                   current >= 2 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in w-full h-[4.7px] absolute`}
+                }  transition ease-in w-full h-[3px] sm:h-[4.7px] absolute`}
               />
             </div>
             <div className="flex items-center w-2/4 relative">
               <div
                 className={`${
                   current >= 3 ? "bg-rectem-50" : "bg-rectem-grey "
-                } transition ease-in rounded-full w-10 h-10 flex justify-center items-center text-white text-sm z-[1]`}
+                } transition ease-in rounded-full w-8 h-8 sm:w-10 sm:h-10  flex justify-center items-center text-white z-[1]`}
               >
                 3
               </div>
               <hr
                 className={`${
                   current >= 3 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in w-full h-[4.7px] absolute`}
+                }  transition ease-in w-full h-[3px] sm:h-[4.7px] absolute`}
               />
             </div>
             <div className="flex items-center w-2/4 relative">
               <div
                 className={`${
                   current >= 4 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in rounded-full w-10 h-10 flex justify-center items-center text-white text-sm z-[1]`}
+                }  transition ease-in rounded-full w-8 h-8 sm:w-10 sm:h-10  flex justify-center items-center text-white z-[1]`}
               >
                 4
               </div>
               <hr
                 className={`${
                   current >= 4 ? "bg-rectem-50" : "bg-rectem-grey "
-                }  transition ease-in w-full h-[4.7px] absolute`}
+                }  transition ease-in w-full h-[3px] sm:h-[4.7px] absolute`}
               />
             </div>
             <div className="w-auto">
               <div
                 className={`${
                   current >= 5 ? "bg-rectem-50" : "bg-rectem-grey "
-                } transition ease-in rounded-full w-10 h-10 flex justify-center items-center text-white text-sm z-[1]`}
+                } transition ease-in rounded-full w-8 h-8 sm:w-10 sm:h-10  flex justify-center items-center text-white z-[1]`}
               >
                 5
               </div>
@@ -100,10 +108,18 @@ const Profile = () => {
             <div className="mb-8 font-normal text-xl">Student bio</div>
           </div>
 
-          <div className="flex flex-col h-96">
-            <FormItem current={current} setCurrent={setCurrent} />
+          <div className="flex flex-col h-full w-full">
+            <FormItem
+              user={user}
+              setUser={setUser}
+              current={current}
+              setCurrent={setCurrent}
+              onSubmit={onSubmit}
+              file={file}
+              setFile={setFile}
+            />
           </div>
-          <div className="flex space-x-8">
+          {/* <div className="flex space-x-8">
             {current <= 1 ? (
               <Button name="Back" path="#!" buttonType={`disabled`} />
             ) : (
@@ -115,11 +131,11 @@ const Profile = () => {
             {current >= 5 ? (
               <Button name="Next" path="#!" buttonType={`disabled`} />
             ) : (
-              <div onClick={() => setCurrent(current + 1)}>
+              <div onClick={onSubmit}>
                 <Button name="Next" path="#!" buttonType={`theme`} />
               </div>
             )}
-          </div>
+          </div> */}
           {/* {FormHeader.map((form, index) => {
             return (
               <div key={index} className="flex flex-row gap-7">

@@ -9,12 +9,6 @@ const StuSettingsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
 
-  const onClk = (e) => {
-    if (showModal === true) {
-      setShowModal(false);
-    }
-  };
-
   return (
     <div className="h-screen flex justify-center items-center font-body tracking-tighten">
       <div

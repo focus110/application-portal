@@ -1,34 +1,55 @@
 import React, { useContext, useState } from "react";
 import AvatarContext from "../../context/avatar/avatarContext";
-import Button from "../Buttons/Button";
+import AlertContext from "../../context/alert/alertContext";
+import NavigationBtn from "../Buttons/NavigationBtn";
 
-const Avatar = ({ setCurrent }) => {
+const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
   const avatarContext = useContext(AvatarContext);
-  const { avaUrl } = avatarContext;
+  const alertContext = useContext(AlertContext);
 
-  const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose Image");
+  const { avaUrl, setAvatar, getAvatar } = avatarContext;
+  const { alert, setAlert } = alertContext;
+
+  // const [filename, setFilename] = useState("Choose Image");
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
-    setFilename(e.target.files[0].name);
+    // setFilename(e.target.files[0].name);
+  };
+  console.log("file", file.name);
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    if (file === "" || file === null) {
+      setAlert("Choose a file", "danger");
+    } else {
+      formData.append("upload", file);
+      setCurrent(current + 1);
+      // formData.append("upload", file);
+      // setAvatar(formData);
+      // setFile("");
+      // setFilename("");
+      // setAlert("Avatar Upadated", "success");
+
+      // getAvatar();
+      // console.log("EFX", avaUrl);
+    }
+    // update(user);
   };
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    state: "",
-    lga: "",
-  });
-
   return (
-    <div className="flex flex-col justify-center items-center">
-      <img
-        src={avaUrl}
-        alt="Profile Pic"
-        className="bg-rectem-25 rounded-full mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40"
-      />
-      <form>
+    <div className="w-full flex flex-col">
+      <div className="flex justify-center">
+        <div></div>
+        <img
+          src={avaUrl}
+          alt="Profile Pic"
+          className="bg-rectem-25 rounded-full mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40 text-sm font-normal"
+        />
+      </div>
+      <form onSubmit={onSubmit} className="items-start">
         <input
           style={{ display: "none" }}
           type="file"
@@ -36,12 +57,18 @@ const Avatar = ({ setCurrent }) => {
           accept="image/*"
           onChange={onChange}
         />
+        <h2 className="text-md font-normal text-sm mb-4">
+          {file?.name ?? "Choose Image"}
+        </h2>
         <label
           className="border-rectem-50 border-[1px] rounded-sm py-2 px-4 cursor-pointer text-base font-normal"
           htmlFor="file"
         >
-          {filename}
+          <span> Choose image</span>
         </label>
+        <div className="pt-8">
+          <NavigationBtn current={current} setCurrent={setCurrent} />
+        </div>
       </form>
     </div>
   );

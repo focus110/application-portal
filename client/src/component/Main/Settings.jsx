@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import Button from "../Buttons/Button";
 
 import AuthContext from "../../context/auth/authContext";
 import AvatarContext from "../../context/avatar/avatarContext";
@@ -9,7 +8,7 @@ import AlertContext from "../../context/alert/alertContext";
 const Settings = ({ name, setName, showModal, setShowModal }) => {
   const authContext = useContext(AuthContext);
   const avatarContext = useContext(AvatarContext);
-  const { avaUrl, setAvatar, getAvatar } = avatarContext;
+  const { avaUrl, setAvatar, getAvatar, error, clearErrors } = avatarContext;
   const alertContext = useContext(AlertContext);
 
   const { setAlert } = alertContext;
@@ -22,12 +21,16 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
     setFilename(e.target.files[0].name);
   };
 
-  // const [user, setUser] = useState({});
   const { user } = authContext;
-  console.log(user);
+
   useEffect(() => {
-    getAvatar();
-  }, []);
+    if (error) {
+      setAlert(error, "danger");
+      setFile("");
+      setFilename("");
+      clearErrors();
+    }
+  }, [error]);
 
   const openModal = (e) => {
     setShowModal((prev) => !prev);
@@ -39,17 +42,22 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
     const formData = new FormData();
 
     if (file === "") {
-      setAlert("Avatar Upadated", "danger");
+      setAlert("Choose a file", "danger");
+      setFile("");
+      setFilename("");
     } else {
       formData.append("upload", file);
       setAvatar(formData);
       setFile("");
       setFilename("");
-      setAlert("Avatar Upadated", "success");
+      setTimeout(() => {
+        getAvatar();
+      }, 1000);
+
+      setAlert("Updated!", "success");
     }
   };
 
-  // console.log(avaUrl);
   return (
     <div className="relative p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
@@ -69,40 +77,42 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
             alt="Profile Pic"
             className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
           />
-          <button>
-            <span className="font-display tracking-tighten not-italic font-medium text-lg">
-              <form
-                onSubmit={onSubmit}
-                className="flex items-center flex-col space-y-4 text-sm"
+          {/* <button>
+            <span className="font-display tracking-tighten not-italic font-medium text-lg"> */}
+          <form
+            onSubmit={onSubmit}
+            className="flex items-center flex-col space-y-4 text-sm"
+          >
+            <div className="w-max flex mt-2  items-center">
+              <input
+                style={{ display: "none" }}
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={onChange}
+              />
+              <label
+                className="w-full cursor-pointer text-black p-2 text-[11px] font-normal"
+                htmlFor="file"
               >
-                <div className="w-[70%] flex mt-2 border-[1px] items-center">
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    id="file"
-                    accept="image/*"
-                    onChange={onChange}
-                  />
-                  <label
-                    className="w-5/12 cursor-pointer text-white bg-rectem-50 p-2"
-                    htmlFor="file"
-                  >
-                    Choose file
-                  </label>
-                  <h1 className="w-7/12 px-2 overflow-x-scroll scroll">
-                    {filename}
-                  </h1>
-                </div>
-                <button>
-                  <Button
-                    name="save image"
-                    path="#!"
-                    buttonType={"theme-btn"}
-                  />
-                </button>
-              </form>
-            </span>
-          </button>
+                {`${filename?.split(" ")[0]}...${
+                  filename.split(" ")[filename.split(" ").length - 1]
+                }`}
+              </label>
+              {/* <h1 className="w-7/12 px-2 overflow-x-scroll scroll">
+                {filename}
+              </h1> */}
+            </div>
+
+            <button
+              className="w-max rounded-md cursor-pointer text-white bg-rectem-50 p-2 px-3 text-xs font-normal"
+              htmlFor="file"
+            >
+              Save
+            </button>
+          </form>
+          {/* </span>
+          </button> */}
         </div>
 
         {/* Account Settings Part */}

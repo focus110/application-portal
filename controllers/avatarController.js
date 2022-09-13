@@ -98,6 +98,7 @@ class AvatarController {
 
       res.send("uploaded successfully");
     } catch (error) {
+      // console.log(error);
       res.status(404).send();
     }
   }
@@ -162,7 +163,7 @@ class AvatarController {
       // check if avatar is in db
       const avatar = await Avatar.findOne({
         where: {
-          id: params,
+          avatar: params,
           foreign_key: id,
         },
       });
@@ -172,7 +173,7 @@ class AvatarController {
 
       const getObjectParams = {
         Bucket: bucketName,
-        Key: avatar.avatar,
+        Key: params,
       };
 
       // delete image from s3 bucket

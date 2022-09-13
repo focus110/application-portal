@@ -27,14 +27,11 @@ export const Modal = ({ id, name, showModal, setShowModal }) => {
   };
 
   const onChange = (e) => {
-    console.log(e.target.name);
+    // console.log(e.target.name);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
-    if (user === "") {
-      console.log("empty");
-    }
     // Build user object
     //  const userFields = {};
     //  if (username) userFields.username = username;
@@ -44,12 +41,20 @@ export const Modal = ({ id, name, showModal, setShowModal }) => {
     //  if (phone) userFields.phone = phone;
     //  if (password) userFields.password = password
     e.preventDefault();
-
-    console.log(user);
-    update(user);
-    setShowModal(false);
-    setAlert("Success", "success");
+    if (user === "" || user === null) {
+      setAlert("Enter all fields", "danger");
+    } else if (user.password !== user.password2) {
+      setAlert("Password do not match!", "danger");
+    } else {
+      update(user);
+      setShowModal(false);
+      setAlert("Success", "success");
+    }
   };
+
+  // console.log(user.password !== user.password2);
+
+  // console.log("USER", user);
 
   return (
     <>

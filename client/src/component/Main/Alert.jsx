@@ -17,14 +17,13 @@ const Alert = () => {
             alert.type === "danger"
               ? `bg-red-100 text-red-700`
               : `bg-green-100 text-green-700`
-          } items-center z-20 transition ease-in flex p-4 mb-4 text-sm  rounded-lg dark:bg-red-200 dark:text-red-800 justify-center absolute w-[20%] left-[40%] top-[10%]`}
+          } z-20 transition ease-in flex p-4 mb-4 text-sm  rounded-lg dark:bg-red-200 dark:text-red-800 absolute w-max sm:w-[20%] -translate-x-[50%] top-[13%] left-[50%] sm:top-[12%]`}
         >
           <svg
             aria-hidden="true"
             className="flex-shrink-0 inline w-5 h-5 mr-3"
             fill="currentColor"
             viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
             onClick={() => removeAlert(alert.id)}
           >
             <path
@@ -33,10 +32,10 @@ const Alert = () => {
               clipRule="evenodd"
             ></path>
           </svg>
-          <span className="sr-only">Info</span>
+          {/* <span className="sr-only">Info</span> */}
           <div>
             <span className="font-medium">
-              {alert.type === "danger" ? " Danger alert!" : " Success alert!"}{" "}
+              {alert.type === "danger" ? "" : " Success"}{" "}
             </span>
             {alert?.msg}
           </div>
@@ -51,7 +50,6 @@ const Alert = () => {
       //       className={`bg-red-500 flex justify-between text-white p-2 alert-${alert.type}`}
       //     >
       //       <svg
-      //         xmlns="http://www.w3.org/2000/svg"
       //         fill="none"
       //         viewBox="0 0 24 24"
       //         strokeWidth={1.5}
@@ -66,7 +64,6 @@ const Alert = () => {
       //       </svg>{" "}
       //       {" " + alert.msg}
       //       <svg
-      //         xmlns="http://www.w3.org/2000/svg"
       //         fill="none"
       //         viewBox="0 0 24 24"
       //         strokeWidth={1.5}

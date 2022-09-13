@@ -19,10 +19,29 @@ const CourseReg = () => {
   const onChange = (e) => setSearch(e.target.value);
 
   return (
-    <div className="pt-8 md:p-10 font-medium font-display flex flex-col mt-12 lg:mt-2 bg-white overflow-y-scroll scrollbar-hide">
-      <span className="not-italic tracking-tighten text-2xl text-rectem-75 text-center md:text-left">
+    <div className="pt-8 md:p-10 font-medium font-display flex flex-col mt-12 lg:mt-2 bg-white overflow-y-scroll scrollbar-hide space-y-8">
+      <span className="not-italic tracking-tighten md:text-2xl text-rectem-75 text-center md:text-left">
         Course Registration
-      </span>{" "}
+      </span>
+      <div className="flex justify-between mb-8">
+        <div></div>
+        <form className="flex flex-col space-y-4">
+          <div className="flex w-full space-x-4 items-center">
+            <div className="w-full">
+              <label className="block text-sm font-medium text-rectem-100 mb-2">
+                Search
+              </label>
+              <input
+                name="search"
+                type="text"
+                className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+                placeholder="search"
+                onChange={onChange}
+              />
+            </div>
+          </div>
+        </form>
+      </div>
       {!isCleared ? (
         <div className="justify-between items-center">
           <div className="bg-white md:w-3/4 lg:w-5/6 h-4/5 md:h-3/4 lg:h-4/5 mt-16 p-12 shadow-box flex flex-col justify-between">
@@ -49,28 +68,9 @@ const CourseReg = () => {
           </div>
         </div>
       ) : (
-        <div className="shadow-sm my-8">
-          <div className="flex justify-between mb-8">
-            <div></div>
-            <form className="flex flex-col space-y-4">
-              <div className="flex w-full space-x-4 items-center">
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-rectem-100 mb-2">
-                    Search
-                  </label>
-                  <input
-                    name="search"
-                    type="text"
-                    className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                    placeholder="search"
-                    onChange={onChange}
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
+        <div className="shadow-sm my-8 overflow-x-scroll">
           <table className="table-auto md:table-auto border-collapse w-full text-sm overflow-x-scroll">
-            <thead>
+            <thead className="">
               <tr>
                 <th className="border-b dark:border-slate-600 font-medium p-4 pl-3 md:pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                   Course Title

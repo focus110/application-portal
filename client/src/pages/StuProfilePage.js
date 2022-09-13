@@ -6,8 +6,9 @@ import Rightside from "../component/Rightside/Rightside";
 
 const StuProfilePage = () => {
   return (
-    <div className="h-screen flex justify-center items-center font-body tracking-tighten">
-      <div className="grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx h-19/20 w-49/50 overflow-hidden">
+    <div className="flex justify-center items-center font-body tracking-tighten">
+      {/* h-19/20 w-49/50 */}
+      <div className="w-[80%] sm:w-full grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx  overflow-hidden">
         <Sidebar index={1} />
         <Profile />
         <Rightside />

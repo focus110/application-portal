@@ -12,6 +12,8 @@ import StuSettingsPage from "./pages/StuSettingsPage";
 import setAuthToken from "./utils/setAuthToken";
 import AuthContext from "./context/auth/authContext";
 import Alert from "./component/Main/Alert";
+import Page404 from "./pages/Page404";
+import Nav from "./component/Main/Nav";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -27,6 +29,7 @@ function App() {
   return (
     <Router>
       <Alert />
+      <Nav />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -36,6 +39,7 @@ function App() {
           <Route path="/course" element={<StuCoursePage />} />
           <Route path="/settings" element={<StuSettingsPage />} />
         </Route>
+        <Route path="/*" element={<Page404 />} />
       </Routes>
     </Router>
   );

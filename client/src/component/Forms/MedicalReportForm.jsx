@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import NavigationBtn from "../Buttons/NavigationBtn";
 
-const MedicalReportForm = () => {
+const MedicalReportForm = ({ user, setUser, current, setCurrent }) => {
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose file");
 
@@ -9,15 +10,19 @@ const MedicalReportForm = () => {
     setFilename(e.target.files[0].name);
   };
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    state: "",
-    lga: "",
-  });
-
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: [e.target.value] });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (user === "" || user === null) {
+      console.log("Enter all fields");
+    } else {
+      console.log("submitted");
+      // update(user);
+    }
   };
 
   return (
@@ -27,7 +32,7 @@ const MedicalReportForm = () => {
         alt="file"
         className="bg-gray-400 rounded-md mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40"
       />
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="flex flex-col mb-6">
           <input
             style={{ display: "none" }}
@@ -43,7 +48,6 @@ const MedicalReportForm = () => {
             {filename}
           </label>
         </div>
-
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -58,6 +62,7 @@ const MedicalReportForm = () => {
             />
           </div>
         </div>
+        <NavigationBtn current={current} setCurrent={setCurrent} />
       </form>
     </div>
   );

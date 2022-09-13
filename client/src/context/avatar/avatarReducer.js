@@ -3,14 +3,17 @@ import {
   GET_AVATAR,
   REMOVE_AVATAR,
   SETAVATAR_FAIL,
+  CLEAR_ERRORS,
 } from "../types";
 
 const avatar = (state, action) => {
+  // console.log("action: \n", action);
+  // console.log("STATE: \n", state);
   switch (action.type) {
     case SET_AVATAR:
       return {
         ...state,
-        payload: action.payload,
+        loadoing: false,
       };
     case GET_AVATAR:
       return {
@@ -22,6 +25,12 @@ const avatar = (state, action) => {
     case SETAVATAR_FAIL:
       return {
         ...state,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

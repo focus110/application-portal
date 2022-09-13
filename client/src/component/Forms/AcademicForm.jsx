@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import Button from "../Buttons/Button";
+import NavigationBtn from "../Buttons/NavigationBtn";
 
-const AcademicForm = ({ setCurrent }) => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    state: "",
-    lga: "",
-  });
-
+const AcademicForm = ({ current, setCurrent, user, setUser }) => {
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
   const onSelectGender = (e) => setUser({ ...user, gender: e.target.value });
   const onSelectState = (e) => setUser({ ...user, state: e.target.value });
   const onSelectLga = (e) => setUser({ ...user, lga: e.target.value });
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (user === "" || user === null) {
+      console.log("Enter all fields");
+    } else {
+      setCurrent(current + 1);
+      console.log("submitted");
+      // update(user);
+    }
+  };
+
   return (
     <div>
-      <form className="flex flex-col space-y-4">
+      <form onSubmit={onSubmit} className="flex flex-col space-y-4">
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -43,7 +48,6 @@ const AcademicForm = ({ setCurrent }) => {
             />
           </div>
         </div>
-
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -72,7 +76,6 @@ const AcademicForm = ({ setCurrent }) => {
             />
           </div>
         </div>
-
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -119,7 +122,6 @@ const AcademicForm = ({ setCurrent }) => {
             </div>
           </div>
         </div>
-
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
@@ -195,6 +197,7 @@ const AcademicForm = ({ setCurrent }) => {
             </div>
           </div>
         </div>
+        <NavigationBtn current={current} setCurrent={setCurrent} />
       </form>
     </div>
   );

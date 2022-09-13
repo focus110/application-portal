@@ -45,7 +45,7 @@ const Button = ({ name, path, buttonType }) => {
         <Link
           to={`${path}`}
           type="button"
-          className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rectem-50 text-base font-medium text-white hover:bg-opacity-90 transition ease-in focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-rectem-50  sm:w-auto sm:text-sm"
+          className="w-max inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-rectem-50 sm:text-base md:font-medium text-white hover:bg-opacity-90 transition ease-in focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-rectem-50  sm:w-auto text-[14px]"
         >
           {name ?? "default btn"}
         </Link>

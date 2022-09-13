@@ -6,6 +6,7 @@ import {
   GET_AVATAR,
   REMOVE_AVATAR,
   SETAVATAR_FAIL,
+  CLEAR_ERRORS,
 } from "../types";
 import avatar from "../../img/avatar.jpg";
 import axios from "axios";
@@ -13,6 +14,8 @@ import axios from "axios";
 const AvatarState = (props) => {
   const initialState = {
     imgUrl: "",
+    error: "",
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(avatarReducer, initialState);
@@ -29,28 +32,27 @@ const AvatarState = (props) => {
 
     try {
       const res = await axios.post(`${baseUrl}/api/avatar`, formData, config);
-      console.log(res);
 
       dispatch({
         type: SET_AVATAR,
-        payload: res,
+        payload: res.data,
       });
     } catch (err) {
-      dispatch({ type: SETAVATAR_FAIL, payload: err.response.data.message });
+      console.log("set avatar", err);
+      dispatch({ type: SETAVATAR_FAIL, payload: err.response.data.error });
     }
   };
 
   // get avatar
-  const getAvatar = () => {
+  const getAvatar = async () => {
     try {
-      const res = axios.get(`${baseUrl}/api/avatar`).then((result) => {
-        dispatch({
-          type: GET_AVATAR,
-          payload: result.data.imgUrl,
-        });
+      const res = await axios.get(`${baseUrl}/api/avatar`);
+      dispatch({
+        type: GET_AVATAR,
+        payload: res.data.imgUrl,
       });
     } catch (error) {
-      console.log(error);
+      console.log("get avatar", error);
       dispatch({ type: SETAVATAR_FAIL, payload: error.response.data.message });
     }
   };
@@ -60,13 +62,19 @@ const AvatarState = (props) => {
     dispatch({ type: REMOVE_AVATAR, payload: id });
   };
 
+  // Clear Errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <AvatarContext.Provider
       value={{
         avaUrl: state.imgUrl,
+        error: state.error,
+        loading: state.loading,
         setAvatar,
         getAvatar,
         removeAvatar,
+        clearErrors,
       }}
     >
       {props.children}

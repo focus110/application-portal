@@ -14,6 +14,7 @@ import {
 
 const auth = (state, action) => {
   // console.log("action: \n", action);
+  // console.log("STATE: \n", state);
   switch (action.type) {
     case USER_LOADED:
       return {
