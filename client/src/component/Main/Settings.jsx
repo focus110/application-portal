@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import avatar from "../../img/avatar.jpg";
 
 import AuthContext from "../../context/auth/authContext";
 import AvatarContext from "../../context/avatar/avatarContext";
@@ -8,7 +9,8 @@ import AlertContext from "../../context/alert/alertContext";
 const Settings = ({ name, setName, showModal, setShowModal }) => {
   const authContext = useContext(AuthContext);
   const avatarContext = useContext(AvatarContext);
-  const { avaUrl, setAvatar, getAvatar, error, clearErrors } = avatarContext;
+  const { avaUrl, setAvatar, getAvatar, error, clearErrors, loading } =
+    avatarContext;
   const alertContext = useContext(AlertContext);
 
   const { setAlert } = alertContext;
@@ -72,11 +74,16 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
           <span className="not-italic font-bold tracking-tighten text-rectem-black text-2xl">
             Account
           </span>
-          <img
-            src={avaUrl}
-            alt="Profile Pic"
-            className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
-          />
+          {console.log(loading)}
+          {loading ? (
+            "loading..."
+          ) : (
+            <img
+              src={avaUrl ?? avatar}
+              alt="Profile Pic"
+              className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
+            />
+          )}
           {/* <button>
             <span className="font-display tracking-tighten not-italic font-medium text-lg"> */}
           <form

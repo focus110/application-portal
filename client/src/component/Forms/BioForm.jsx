@@ -169,7 +169,6 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
             </label>
             <div className="w-full relative">
               <select
-                value={gender}
                 className="appearance-none block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white bg-clip-padding bg-no-repeat border rounded-sm transition ease-in-out m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
                 aria-label="Default select example"
                 onChange={onSelectGender}

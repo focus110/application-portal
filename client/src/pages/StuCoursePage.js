@@ -6,8 +6,8 @@ import Rightside from "../component/Rightside/Rightside";
 
 const StuCoursePage = () => {
   return (
-    <div className="overflow-hidden flex justify-center items-center font-body tracking-tighten">
-      <div className="wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx">
+    <div className="flex justify-center items-center font-body tracking-tighten">
+      <div className="overflow-hidden wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx">
         <Sidebar index={2} />
         <Course />
         <Rightside />

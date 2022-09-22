@@ -25,58 +25,31 @@ const AcademicForm = ({ current, setCurrent, user, setUser }) => {
         <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
-              Firstname
+              O level
             </label>
             <input
-              name="firstname"
+              name="olevel"
               type="text"
               className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="firstname"
+              placeholder="O level"
               onChange={onChange}
             />
           </div>
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
-              Lastname
+              Number of sitting
             </label>
             <input
-              name="lastname"
+              name="sitting"
               type="text"
               className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="lastname"
+              placeholder="Number of Sitting"
               onChange={onChange}
             />
           </div>
         </div>
-        <div className="flex w-full space-x-4 items-center">
-          <div className="w-full">
-            <label className="block text-sm font-medium text-rectem-100 mb-2">
-              Middle name
-            </label>
-            <input
-              name="Middlename"
-              type="text"
-              className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="Middle name"
-              required
-              onChange={onChange}
-            />
-          </div>
-          <div className="w-full">
-            <label className="block text-sm font-medium text-rectem-100 mb-2">
-              Mobile number
-            </label>
-            <input
-              name="Mobilenumber"
-              type="phone"
-              className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="Mobile number"
-              required
-              onChange={onChange}
-            />
-          </div>
-        </div>
-        <div className="flex w-full space-x-4 items-center">
+
+        {/* <div className="flex w-full space-x-4 items-center">
           <div className="w-full">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
               Email
@@ -196,7 +169,7 @@ const AcademicForm = ({ current, setCurrent, user, setUser }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <NavigationBtn current={current} setCurrent={setCurrent} />
       </form>
     </div>

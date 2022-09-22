@@ -30,8 +30,14 @@ const ApplicationGuide = () => {
           upload the soft coppies
         </p>
       </div>
-      <Button name="Start application" path="/profile" buttonType={`danger`} />
-      <Button name="Change username" path="/settings" buttonType={`light`} />
+      <div className="space-x-4">
+        <Button
+          name="Start application"
+          path="/profile"
+          buttonType={`danger`}
+        />
+        <Button name="Change username" path="/settings" buttonType={`light`} />
+      </div>
     </div>
   );
 };

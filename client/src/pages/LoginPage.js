@@ -128,7 +128,7 @@ const LoginPage = () => {
             </div>
 
             <div className="w-full">
-              <button className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
+              <button className="w-full mb-4 px-6 py-4 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
                 <span className="font-semibold text-white text-lg">Login</span>
               </button>
               <Link

@@ -154,7 +154,7 @@ const User = db.define("users", {
     },
     defaultValue: "pending",
   },
-  programme: {
+  program: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {

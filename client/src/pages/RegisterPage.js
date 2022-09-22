@@ -49,7 +49,7 @@ const RegisterPage = () => {
   } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-  const onSelect = (e) => setUser({ ...user, gender: e.target.value });
+  const onSelect = (e) => setUser({ ...user, program: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +63,7 @@ const RegisterPage = () => {
       password === "" ||
       password2 === ""
     ) {
-      setAlert("Please enter all fields", "red");
+      setAlert("Please enter all fields", "danger");
     } else if (password !== password2) {
       setAlert("Password do not match", "danger");
     } else {
@@ -102,7 +102,7 @@ const RegisterPage = () => {
           <Alert />
 
           <form onSubmit={onSubmit} className="space-y-6 py-6">
-            <div className="flex w-full space-x-4">
+            {/* <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
                   Firstname
@@ -127,9 +127,9 @@ const RegisterPage = () => {
                   onChange={onChange}
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className="flex w-full space-x-4">
+            {/* <div className="flex w-full space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
                   Username
@@ -172,7 +172,7 @@ const RegisterPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex w-full space-x-4">
               <div className="w-full">
@@ -189,16 +189,18 @@ const RegisterPage = () => {
               </div>
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
-                  Phone
+                  Program
                 </label>
-                <input
-                  name="phone"
-                  type="number"
-                  className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                  placeholder="phone"
-                  onChange={onChange}
-                />
+                <div className="w-full">
+                  <select
+                    className="block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white border rounded-3xl transition ease-in-out m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
+                    onChange={onSelect}
+                  >
+                    <option value="">Select Application Type</option>
+                    <option value="ond">OND</option>
+                    <option value="hnd">HND</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -257,7 +259,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="w-full">
-              <button className="w-full px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
+              <button className="w-full mb-4 px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">
                 <span className="font-semibold text-white text-lg">
                   Sign up
                 </span>
