@@ -4,7 +4,7 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   /* scroll-behavior: smooth; */
-  /* @apply scrollbar-hide; */
+  @apply scrollbar-hide;
   /* overflow: hidden; */
 }
 
@@ -35,4 +35,8 @@ code {
   50% {
     @apply transform scale-150 text-opacity-0;
   }
+}
+
+.wrapper {
+  @apply w-full h-screen;
 }

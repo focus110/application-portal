@@ -54,12 +54,12 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
         getAvatar();
       }, 1000);
 
-      setAlert("Updated!", "success");
+      // setAlert("Updated!", "success");
     }
   };
 
   return (
-    <div className="relative p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
+    <div className="relative p-8 sm:p-10 font-medium flex flex-col gap-8 mt-8 lg:mt-2 bg-white">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
         Settings
       </span>
@@ -68,7 +68,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
       <div className="flex flex-col md:flex-row gap-10 md:gap-16 md:justify-evenly">
         {/* <Modal showModal={showModal} setShowModal={setShowModal} name={name} /> */}
         {/* Profile Picture Part */}
-        <div className="flex flex-col w-1/4 text-center items-center gap-3">
+        <div className="flex flex-col sm:w-1/4 text-center items-center gap-3">
           <span className="not-italic font-bold tracking-tighten text-rectem-black text-2xl">
             Account
           </span>
@@ -95,9 +95,11 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
                 className="w-full cursor-pointer text-black p-2 text-[11px] font-normal"
                 htmlFor="file"
               >
-                {`${filename?.split(" ")[0]}...${
-                  filename.split(" ")[filename.split(" ").length - 1]
-                }`}
+                {!file
+                  ? " Choose image"
+                  : `${filename?.split(" ")[0]}...${
+                      filename.split(" ")[filename.split(" ").length - 1]
+                    }`}
               </label>
               {/* <h1 className="w-7/12 px-2 overflow-x-scroll scroll">
                 {filename}
@@ -105,7 +107,9 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
             </div>
 
             <button
-              className="w-max rounded-md cursor-pointer text-white bg-rectem-50 p-2 px-3 text-xs font-normal"
+              className={`${
+                file ? "block" : "hidden"
+              } w-max rounded-md cursor-pointer text-white bg-rectem-50 p-2 px-3 text-xs font-normal`}
               htmlFor="file"
             >
               Save

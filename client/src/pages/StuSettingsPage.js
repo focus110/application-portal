@@ -10,7 +10,7 @@ const StuSettingsPage = () => {
   const [name, setName] = useState("");
 
   return (
-    <div className="h-screen flex justify-center items-center font-body tracking-tighten">
+    <div className="flex justify-center items-center font-body tracking-tighten">
       <div
         className={`${
           showModal ? null : `hidden`
@@ -24,7 +24,7 @@ const StuSettingsPage = () => {
         name={name}
       />
 
-      <div className="grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx h-19/20 w-49/50 md:overflow-hidden">
+      <div className="wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx md:overflow-hidden">
         <Sidebar index={3} />
         <Settings
           showModal={showModal}

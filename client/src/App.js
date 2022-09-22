@@ -14,6 +14,7 @@ import AuthContext from "./context/auth/authContext";
 import Alert from "./component/Main/Alert";
 import Page404 from "./pages/Page404";
 import Nav from "./component/Main/Nav";
+import AvatarContext from "./context/avatar/avatarContext";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -21,11 +22,14 @@ if (localStorage.token) {
 }
 function App() {
   const authContext = useContext(AuthContext);
+  const avatarContext = useContext(AvatarContext);
 
   useEffect(() => {
     authContext.loadUser();
     // eslint-disable-next-line
+    // avatarContext.getAvatar();
   }, []);
+
   return (
     <Router>
       <Alert />

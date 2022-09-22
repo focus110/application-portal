@@ -40,7 +40,7 @@ const LoginPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
-      setAlert("Please enter all fields", "red");
+      setAlert("Please enter all fields", "danger");
     } else {
       login({
         email: email.toLocaleLowerCase(),
@@ -67,7 +67,7 @@ const LoginPage = () => {
               login to your account
             </p>
           </div>
-          <Alert />
+          {/* <Alert /> */}
           <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
@@ -95,6 +95,7 @@ const LoginPage = () => {
                 className="block w-full rounded-3xl border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                 placeholder="password"
                 onChange={onChange}
+                required
               />
             </div>
 
