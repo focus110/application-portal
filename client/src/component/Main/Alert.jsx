@@ -17,7 +17,7 @@ const Alert = () => {
             alert.type === "danger"
               ? `bg-red-100 text-red-700`
               : `bg-green-100 text-green-700`
-          } z-20 transition ease-in flex p-4 mb-4 text-sm  rounded-lg dark:bg-red-200 dark:text-red-800 absolute w-max sm:w-[20%] -translate-x-[50%] top-[13%] left-[50%] sm:top-[12%]`}
+          } z-20 transition ease-in flex p-4 mb-4 text-sm rounded-lg dark:bg-red-200 dark:text-red-800 absolute w-max sm:w-[40%] -translate-x-[50%] top-[13%] left-[50%] sm:top-[12%]`}
         >
           <svg
             aria-hidden="true"

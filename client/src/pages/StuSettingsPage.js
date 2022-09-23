@@ -4,6 +4,7 @@ import Sidebar from "../component/Sidebar/Sidebar";
 import Settings from "../component/Main/Settings";
 import Rightside from "../component/Rightside/Rightside";
 import { Modal } from "../component/Modal/Modal";
+import Alert from "../component/Main/Alert";
 
 const StuSettingsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +26,7 @@ const StuSettingsPage = () => {
       />
 
       <div className="wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx md:overflow-hidden">
+        <Alert />
         <Sidebar index={3} />
         <Settings
           showModal={showModal}

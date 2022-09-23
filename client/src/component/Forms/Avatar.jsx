@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import AvatarContext from "../../context/avatar/avatarContext";
 import AlertContext from "../../context/alert/alertContext";
 import NavigationBtn from "../Buttons/NavigationBtn";
+import user_img from "../../img/user.png";
 
 const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
   const avatarContext = useContext(AvatarContext);
@@ -13,10 +14,12 @@ const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
   // const [filename, setFilename] = useState("Choose Image");
 
   const onChange = (e) => {
-    setFile(e.target.files[0]);
+    // setFile(e.target.files[0]);
+
+    setFile({ data: null || URL.createObjectURL(e.target.files[0]) });
     // setFilename(e.target.files[0].name);
   };
-  console.log("file", file.name);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -44,9 +47,9 @@ const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
       <div className="flex justify-center">
         <div></div>
         <img
-          src={avaUrl}
+          src={file?.data ?? user_img}
           alt="Profile Pic"
-          className="bg-rectem-25 rounded-full mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40 text-sm font-normal"
+          className="bg-rectem-25 rounded-full object-cover mb-8 h-40 w-40 md:h-36 md:w-36 lg:h-36 lg:w-36 xl:h-40 xl:w-40 text-sm font-normal"
         />
       </div>
       <form onSubmit={onSubmit} className="items-start">

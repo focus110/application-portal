@@ -266,14 +266,14 @@ const User = db.define("users", {
   },
 
   // ACADEMIC RECORDS
-  courses: {
-    type: Sequelize.JSON,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
+  // courses: {
+  //   type: Sequelize.JSON,
+  //   allowNull: false,
+  //   validator: {
+  //     notEmpty: true,
+  //   },
+  //   defaultValue: "",
+  // },
 
   // MEDICAL REPORT
   medical_report: {
@@ -285,14 +285,14 @@ const User = db.define("users", {
     defaultValue: "",
   },
 
-  signature: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
+  // signature: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   validator: {
+  //     notEmpty: true,
+  //   },
+  //   defaultValue: "",
+  // },
   password: {
     type: Sequelize.STRING,
     allowNull: false,

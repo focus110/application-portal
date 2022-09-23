@@ -1,10 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Logo from "../../img/logo.png";
 import { MenuIcon } from "@heroicons/react/solid";
 import { Link, NavLink } from "react-router-dom";
 import { SidebarData } from "../Data/Data";
+import AuthContext from "../../context/auth/authContext";
 
 const Nav = () => {
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, loading } = authContext;
+
   const [isOpen, setIsOpen] = useState(false);
   const openMenu = () => {
     setIsOpen(!isOpen);
@@ -52,13 +56,27 @@ const Nav = () => {
             </svg>
           </div>
         </li>
-        {SidebarData.map((item, i) => {
-          return (
-            <li onClick={openMenu} key={i} className="pb-2 pl-4 ">
-              <NavLink to={`/${item.link}`}>{item.heading}</NavLink>
+        {!isAuthenticated ? (
+          <div className="p-4 space-y-4 font-semibold">
+            <li onClick={openMenu} className="pb-2 pl-4">
+              <NavLink to={`/`}>Login</NavLink>
             </li>
-          );
-        })}
+            <li
+              onClick={openMenu}
+              className="pl-4 py-4 text-rectem-50 bg-white rounded-md"
+            >
+              <NavLink to={`/register`}>Register</NavLink>
+            </li>
+          </div>
+        ) : (
+          SidebarData.map((item, i) => {
+            return (
+              <li onClick={openMenu} key={i} className="pb-2 pl-4 ">
+                <NavLink to={`/${item.link}`}>{item.heading}</NavLink>
+              </li>
+            );
+          })
+        )}
       </ul>
       <div className="flex justify-between items-center h-full px-9">
         <Link to="/">

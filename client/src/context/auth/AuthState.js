@@ -86,8 +86,10 @@ const AuthState = (props) => {
       // loadUser();
       // am not loading user here because by default res return user
     } catch (err) {
-      console.log(err);
-      dispatch({ type: REGISTER_FAIL, payload: err.response.data.message });
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.message || err.response.data.errors[0].msg,
+      });
     }
   };
 
@@ -107,6 +109,7 @@ const AuthState = (props) => {
       // loadUser();
       // am not loading user here because by default res return user
     } catch (err) {
+      // console.log(err.response.data.message);
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.message });
     }
   };

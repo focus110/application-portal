@@ -51,7 +51,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
     nationality,
     state,
   } = user;
-  console.log(user);
+  // console.log(user);
 
   const onSubmit_ = (e) => {
     e.preventDefault();
@@ -251,7 +251,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectNal}
                 required
               >
-                <option value="none" defaultValue disabled hidden>
+                <option value="none" defaultValue disabled>
                   Select an Option
                 </option>
                 {Nationality.map((item, i) => {
@@ -290,7 +290,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectState}
                 required
               >
-                <option value="none" defaultValue disabled hidden>
+                <option value="none" defaultValue disabled>
                   Select an Option
                 </option>
                 {States.map((state, i) => {
@@ -329,7 +329,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectLga}
                 required
               >
-                <option value="none" selected disabled>
+                <option value="none" defaultValue disabled>
                   Select an Option
                 </option>
 

@@ -11,6 +11,7 @@ const StuDashboardPage = () => {
   useEffect(() => {
     authContext.loadUser();
   }, []);
+
   return (
     <div className="flex justify-center items-center font-body tracking-tighten">
       <div className="wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xl md:overflow-hidden">

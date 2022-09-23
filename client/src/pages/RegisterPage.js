@@ -19,7 +19,10 @@ const RegisterPage = () => {
       goTo("/dashboard");
     }
 
-    if (error === "User with the given username already exists") {
+    if (error === "User with the given email already exists") {
+      setAlert(error, "danger");
+      clearErrors();
+    } else if (error === "Password should be more than 6") {
       setAlert(error, "danger");
       clearErrors();
     }
@@ -31,6 +34,7 @@ const RegisterPage = () => {
     lastname: "",
     username: "",
     gender: "",
+    program: "",
     email: "",
     phone: "",
     password: "",
@@ -43,6 +47,7 @@ const RegisterPage = () => {
     username,
     gender,
     email,
+    program,
     phone,
     password,
     password2,
@@ -54,12 +59,13 @@ const RegisterPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (
-      firstname === "" ||
-      lastname === "" ||
-      username === "" ||
-      gender === "" ||
+      // firstname === "" ||
+      // lastname === "" ||
+      // username === "" ||
+      // gender === "" ||
       email === "" ||
-      phone === "" ||
+      program === "" ||
+      // phone === "" ||
       password === "" ||
       password2 === ""
     ) {
@@ -67,16 +73,17 @@ const RegisterPage = () => {
     } else if (password !== password2) {
       setAlert("Password do not match", "danger");
     } else {
-      console.log(user);
       register({
-        firstname: firstname.toLowerCase(),
-        lastname: lastname.toLowerCase(),
-        username: username.toLowerCase(),
-        gender: gender,
+        // firstname: firstname.toLowerCase(),
+        // lastname: lastname.toLowerCase(),
+        // username: username.toLowerCase(),
+        // gender: gender,
         email: email.toLocaleLowerCase(),
-        phone: phone,
+        program: program.toLocaleLowerCase(),
+        // phone: phone,
         password: password,
       });
+      // console.log(user);
     }
   };
 
@@ -87,11 +94,15 @@ const RegisterPage = () => {
       </div>
       <div className="relative h-full ml-auto lg:w-6/12">
         <div className="mx-auto py-12 px-6 sm:p-20 xl:w-10/12">
-          <div className="space-y-2">
+          <div className="space-y-2  mt-16 sm:mt-0">
             <Link to="/register">
-              <img src={logo} className="w-40" alt="rectem logo" />
+              <img
+                src={logo}
+                className="hidden sm:block w-40"
+                alt="rectem logo"
+              />
             </Link>
-            <h1 className="text-2xl text-rectem-black font-bold mt-16 mb-24">
+            <h1 className="text-2xl text-rectem-black font-bold sm:mt-16 mb-24">
               Register
             </h1>
             <p className="font-medium text-sm text-rectem-grey">
@@ -174,7 +185,7 @@ const RegisterPage = () => {
               </div>
             </div> */}
 
-            <div className="flex w-full space-x-4">
+            <div className="flex w-full space-x-2 sm:space-x-4">
               <div className="w-full">
                 <label className="block text-sm font-medium text-rectem-100 mb-2">
                   Email
@@ -230,7 +241,7 @@ const RegisterPage = () => {
               />
             </div>
 
-            <div className="flex items-center text-sm font-medium text-rectem-100 cursor-pointer relative">
+            {/* <div className="flex items-center text-sm font-medium text-rectem-100 cursor-pointer relative">
               <input
                 className="mr-2 text-rectem-50 text-2xl appearance-none rounded border border-rectem-50 h-5 w-5"
                 type="checkbox"
@@ -256,7 +267,7 @@ const RegisterPage = () => {
                 I agree to the{" "}
                 <span className="text-rectem-50">Terms & Conditions</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="w-full">
               <button className="w-full mb-4 px-6 py-3 block text-center bg-rectem-50 text-white rounded-3xl text-sm transition">

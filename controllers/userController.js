@@ -91,16 +91,25 @@ class UserController {
       return res.status(400).json({ errors: errors.array() });
 
     try {
-      const { firstname, lastname, username, gender, phone, email, password } =
-        req.body;
+      const {
+        firstname,
+        lastname,
+        username,
+        gender,
+        phone,
+        email,
+        program,
+        password,
+      } = req.body;
 
       // check if input is empty
       if (
-        !firstname ||
-        !lastname ||
-        !username ||
-        !gender ||
-        !phone ||
+        // !firstname ||
+        // !lastname ||
+        // !username ||
+        // !gender ||
+        // !phone ||
+        !program ||
         !email ||
         !password
       ) {
@@ -110,16 +119,16 @@ class UserController {
       }
 
       // Check if username already exists
-      const usernameExists = await User.findOne({
-        where: { username },
-      });
+      // const usernameExists = await User.findOne({
+      //   where: { username },
+      // });
 
-      if (usernameExists)
-        return res
-          .status(500)
-          .send(
-            response("User with the given username already exists", {}, false)
-          );
+      // if (usernameExists)
+      //   return res
+      //     .status(500)
+      //     .send(
+      //       response("User with the given username already exists", {}, false)
+      //     );
 
       // Check if email already exists
       const emailExists = await User.findOne({
@@ -130,17 +139,18 @@ class UserController {
         return res
           .status(500)
           .send(
-            response(" User with the given email already exists", {}, false)
+            response("User with the given email already exists", {}, false)
           );
 
       // save User in the database
       const user = await User.create({
-        firstname: firstname,
-        lastname: lastname,
-        username: username,
-        gender: gender,
-        phone: phone,
+        // firstname: firstname,
+        // lastname: lastname,
+        // username: username,
+        // gender: gender,
+        // phone: phone,
         email: email,
+        program: program,
         password: bcrypt.hashSync(password, 10),
       });
 
@@ -154,6 +164,7 @@ class UserController {
         id: user.id,
         role: user.role,
       };
+
       const token = jwt.sign(payload, secret, { expiresIn: "1d" });
 
       const { id } = user;
@@ -197,6 +208,7 @@ class UserController {
         response("User was created successfully", { user, token, userOTPS })
       );
     } catch (err) {
+      console.log(err);
       res.status(500).send("server error");
     }
   }
@@ -265,7 +277,7 @@ class UserController {
 
       // check if user exit
       if (!user) {
-        return res.status(404).send(response("Invalid Credentials", {}, false));
+        return res.status(404).send(response("invalid credentials", {}, false));
       }
 
       const isMatch = bcrypt.compareSync(password, user.password);

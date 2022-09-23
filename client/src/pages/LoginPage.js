@@ -21,10 +21,11 @@ const LoginPage = () => {
       goTo("/dashboard");
     }
 
-    if (error === "Invalid Credentials") {
+    if (error === "Invalid credentials") {
       setAlert(error, "danger");
       clearErrors();
     }
+
     // eslint-disable-next-line
   }, [error, isAuthenticated]);
 
@@ -67,7 +68,7 @@ const LoginPage = () => {
               login to your account
             </p>
           </div>
-          {/* <Alert /> */}
+          <Alert />
           <form onSubmit={onSubmit} className="space-y-6 py-6">
             <div className="flex w-full space-x-4">
               <div className="w-full">
@@ -86,7 +87,9 @@ const LoginPage = () => {
             </div>
 
             <div className="flex flex-col items-start">
-              <label className="block text-sm font-medium text-rectem-100 mb-2">
+              <label
+                className={`${``} text-rectem-100 block text-sm font-medium mb-2`}
+              >
                 Password
               </label>
               <input

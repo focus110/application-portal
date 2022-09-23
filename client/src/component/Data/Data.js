@@ -74,30 +74,35 @@ export const NotificationData = [
 
 export const FormHeader = [
   {
+    id: 1,
     icon: "",
     check: CheckCircleIcon,
-    header: "Student data form",
+    header: "Student Bio",
     edit: PencilIcon,
   },
   {
+    id: 2,
     icon: "",
     check: CheckCircleIcon,
-    header: "Academic Certificate form",
+    header: "Student Passport",
     edit: PencilIcon,
   },
   {
+    id: 3,
     icon: "",
     check: CheckCircleIcon,
-    header: "Student bio",
+    header: "Guardian",
     edit: PencilIcon,
   },
   {
+    id: 4,
     icon: "",
     check: CheckCircleIcon,
     header: "Medical report",
     edit: PencilIcon,
   },
   {
+    id: 5,
     icon: "",
     check: CheckCircleIcon,
     header: "Payment",

@@ -32,7 +32,7 @@ const NavigationBtn = ({ current, setCurrent }) => {
         </button>
       ) : (
         <button className="w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 bg-rectem-50 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
-          Next
+          Save and countinue
         </button>
       )}
     </div>

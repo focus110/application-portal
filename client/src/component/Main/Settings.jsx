@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import avatar from "../../img/avatar.jpg";
+import user_img from "../../img/user.png";
 
 import AuthContext from "../../context/auth/authContext";
 import AvatarContext from "../../context/avatar/avatarContext";
@@ -33,6 +33,12 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
       clearErrors();
     }
   }, [error]);
+
+  // useEffect(() => {
+  //   if (avaUrl) {
+  //     getAvatar();
+  //   }
+  // }, [filename]);
 
   const openModal = (e) => {
     setShowModal((prev) => !prev);
@@ -74,12 +80,11 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
           <span className="not-italic font-bold tracking-tighten text-rectem-black text-2xl">
             Account
           </span>
-          {console.log(loading)}
           {loading ? (
             "loading..."
           ) : (
             <img
-              src={avaUrl ?? avatar}
+              src={!avaUrl || avaUrl === "" ? user_img : avaUrl}
               alt="Profile Pic"
               className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
             />

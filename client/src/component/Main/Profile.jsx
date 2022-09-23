@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import AuthContext from "../../context/auth/authContext";
 import Button from "../Buttons/Button";
+import { FormHeader } from "../Data/Data";
 import FormItem from "../item/FormItem";
 
 const Profile = () => {
-  const [current, setCurrent] = useState(1);
-  const [user, setUser] = useState({});
-  const [file, setFile] = useState("");
+  const authContext = useContext(AuthContext);
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const [current, setCurrent] = useState(2);
+  const [user, setUser] = useState({
+    firstname: authContext.user.firstname,
+    lastname: authContext.user.lastname,
+    username: authContext.user.username,
+    gender: authContext.user.gender,
+    email: authContext.user.email,
+    program: authContext.user.program,
+    phone: authContext.user.phone,
+  });
+
+  const [file, setFile] = useState({ data: null });
+
+  const formTitle = FormHeader.map((item, i) => {
+    return (
+      <p key={i} className="mb-8 font-normal text-xl">
+        {current === item.id ? item.header : null}
+      </p>
+    );
+  });
 
   const onSubmit = () => {
     // ;
@@ -104,9 +123,7 @@ const Profile = () => {
             })} */}
           </div>
 
-          <div className="flex justify-center items-center">
-            <div className="mb-8 font-normal text-xl">Student bio</div>
-          </div>
+          <div className="flex justify-center items-center">{formTitle}</div>
 
           <div className="flex flex-col h-full w-full">
             <FormItem

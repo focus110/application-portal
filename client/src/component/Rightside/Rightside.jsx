@@ -1,6 +1,7 @@
 // Imports
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import user_img from "../../img/user.png";
 
 import "./Rightside.css";
 import { NotificationData } from "../Data/Data";
@@ -14,10 +15,17 @@ import frame from "../../img/frame3.png";
 import AdmissionStatus from "./AdmissionStatus";
 import AuthContext from "../../context/auth/authContext";
 import AvatarContext from "../../context/avatar/avatarContext";
+import { useEffect } from "react";
 
 const Rightside = () => {
   const avatarContext = useContext(AvatarContext);
   const { avaUrl } = avatarContext;
+
+  useEffect(() => {
+    avatarContext.getAvatar();
+  }, []);
+
+  const isOnline = navigator.onLine;
 
   // State for dropdown button
   const [arrowIsOpen, setArrowIsOpen] = useState(false);
@@ -96,7 +104,7 @@ const Rightside = () => {
             {/* Profile picture */}
 
             <img
-              src={avaUrl}
+              src={!avaUrl || !isOnline ? user_img : avaUrl}
               alt="profile pic"
               className="p-1 h-10 w-10 md:h-14 md:w-14 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
             />

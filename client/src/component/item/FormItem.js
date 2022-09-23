@@ -4,6 +4,7 @@ import AcademicForm from "../Forms/AcademicForm";
 import DataForm from "../Forms/DataForm";
 import MedicalReportForm from "../Forms/MedicalReportForm";
 import Avatar from "../Forms/Avatar";
+import Guardian from "../Forms/Guardian";
 
 const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
   switch (current) {
@@ -29,7 +30,7 @@ const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
       );
     case 3:
       return (
-        <AcademicForm
+        <Guardian
           current={current}
           setCurrent={setCurrent}
           user={user}
@@ -48,6 +49,15 @@ const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
     case 5:
       return (
         <MedicalReportForm
+          current={current}
+          setCurrent={setCurrent}
+          user={user}
+          setUser={setUser}
+        />
+      );
+    case 6:
+      return (
+        <AcademicForm
           current={current}
           setCurrent={setCurrent}
           user={user}
