@@ -8,15 +8,15 @@ import FormItem from "../item/FormItem";
 const Profile = () => {
   const authContext = useContext(AuthContext);
 
-  const [current, setCurrent] = useState(2);
+  const [current, setCurrent] = useState(4);
   const [user, setUser] = useState({
-    firstname: authContext.user.firstname,
-    lastname: authContext.user.lastname,
-    username: authContext.user.username,
-    gender: authContext.user.gender,
-    email: authContext.user.email,
-    program: authContext.user.program,
-    phone: authContext.user.phone,
+    firstname: authContext?.user?.firstname,
+    lastname: authContext?.user?.lastname,
+    username: authContext?.user?.username,
+    gender: authContext?.user?.gender,
+    email: authContext?.user?.email,
+    program: authContext?.user?.program,
+    phone: authContext?.user?.phone,
   });
 
   const [file, setFile] = useState({ data: null });
@@ -37,7 +37,7 @@ const Profile = () => {
   // console.log(user);
 
   return (
-    <div className="mx-0 py-12 sm:mx-10 h-max font-medium flex flex-col bg-white overflow-y-scroll scrollbar-hide">
+    <div className="overflow-y-scroll scrollbar-hide mx-0 py-12 p-8 sm:mx-10 font-medium flex flex-col bg-white">
       <span className="not-italic tracking-tighten text-2xl font-display text-rectem-75 text-center md:text-left">
         Profile
       </span>

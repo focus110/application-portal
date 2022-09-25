@@ -1,7 +1,7 @@
 import React from "react";
 import BioForm from "../Forms/BioForm";
 import AcademicForm from "../Forms/AcademicForm";
-import DataForm from "../Forms/DataForm";
+import Jamb from "../Forms/Jamb";
 import MedicalReportForm from "../Forms/MedicalReportForm";
 import Avatar from "../Forms/Avatar";
 import Guardian from "../Forms/Guardian";
@@ -39,7 +39,7 @@ const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
       );
     case 4:
       return (
-        <DataForm
+        <Jamb
           current={current}
           setCurrent={setCurrent}
           user={user}

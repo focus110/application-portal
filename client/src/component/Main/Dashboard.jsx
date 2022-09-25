@@ -1,10 +1,11 @@
 import React from "react";
 import ApplicationGuide from "./ApplicationGuide";
 import "./Main.css";
+import StudentInfo from "./StudentInfo";
 
 const Dashboard = () => {
   return (
-    <div className="p-8 md:p-10 font-medium flex flex-col w-full font-display mt-8 lg:mt-2 bg-white">
+    <div className="p-8 md:p-10 font-medium flex flex-col w-full font-display mt-16 sm:mt-8 lg:mt-2 bg-gray-50">
       {/* <span className="not-italic tracking-tighten text-2xl text-rectem-75 text-center mb-6 md:text-left">
         Dashboard
       </span> */}
@@ -24,6 +25,7 @@ const Dashboard = () => {
       <span className="not-italic tracking-tighten text-2xl text-rectem-75 text-center mb-6 md:text-left">
         Application Guide
       </span>
+      <StudentInfo />
       <ApplicationGuide />
       {/* <div className="flex flex-col md:flex-row justify-evenly mb-6 gap-4 md:gap-8">
 				<div className="bg-rectem-blue w-full md:w-1/3 md:h-40 text-white p-5">

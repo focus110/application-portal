@@ -218,14 +218,22 @@ class UserController {
     try {
       const id = req.user.id;
 
-      const { username, firstname, lastname, email, phone, password } =
-        req.body;
+      const {
+        username,
+        firstname,
+        lastname,
+        email,
+        phone,
+        department,
+        password,
+      } = req.body;
 
       // Build user object
       const userFields = {};
       if (username) userFields.username = username;
       if (firstname) userFields.firstname = firstname;
       if (lastname) userFields.lastname = lastname;
+      if (department) userFields.department = department;
       if (email) userFields.email = email;
       if (phone) userFields.phone = phone;
       // if password is provided then bcrypt password

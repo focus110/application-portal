@@ -3,7 +3,7 @@ import Button from "../Buttons/Button";
 
 const ApplicationGuide = () => {
   return (
-    <div className="">
+    <div className="bg-white p-6 sm:p-10">
       <h3
         className="text-lg leading-6 font-medium text-gray-900 mb-2"
         id="modal-title"
@@ -11,7 +11,7 @@ const ApplicationGuide = () => {
         2022/2023 ADMISSION IN PROGRESS -
       </h3>
       <div className="text-rectem-grey mb-5">
-        <p className="text-sm text-gray-500 mb-3">
+        <p className="text-lg text-gray-500 mb-3">
           Redeemer’s College of Technology and Management invites you to apply
           to our full-time National Diploma (ND) and Higher National Diploma
           (HND) Programmes for the 2021/2022 academic session. Fiil in your
@@ -30,7 +30,7 @@ const ApplicationGuide = () => {
           upload the soft coppies
         </p>
       </div>
-      <div className="space-x-4">
+      <div className="space-y-4 sm:space-y-0 sm:space-x-4">
         <Button
           name="Start application"
           path="/profile"

@@ -21,7 +21,7 @@ const Sidebar = (props) => {
   };
 
   return (
-    <>
+    <div className="">
       {/* flex fixed md: */}
       <div
         className="hidden h-14 w-14 top-6 z-10 bg-white p-2.5 rounded-xl"
@@ -75,7 +75,7 @@ const Sidebar = (props) => {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

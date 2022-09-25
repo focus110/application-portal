@@ -14,7 +14,7 @@ const StuDashboardPage = () => {
 
   return (
     <div className="flex justify-center items-center font-body tracking-tighten">
-      <div className="wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xl md:overflow-hidden">
+      <div className="relative wrapper grid md:grid-cols-md lg:grid-cols-x 2xl:grid-cols-xx">
         <Sidebar index={0} />
         <Dashboard />
         <Rightside />

@@ -109,7 +109,7 @@ const AuthState = (props) => {
       // loadUser();
       // am not loading user here because by default res return user
     } catch (err) {
-      // console.log(err.response.data.message);
+      console.log(err.response);
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.message });
     }
   };

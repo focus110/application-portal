@@ -98,17 +98,23 @@ export const FormHeader = [
     id: 4,
     icon: "",
     check: CheckCircleIcon,
-    header: "Medical report",
+    header: "Jamb Result",
     edit: PencilIcon,
   },
   {
     id: 5,
     icon: "",
     check: CheckCircleIcon,
-    header: "Payment",
+    header: "O level",
     edit: PencilIcon,
   },
 ];
+
+export const arr = [];
+const thisYear = new Date().getFullYear();
+for (let index = 1977; index <= thisYear; index++) {
+  arr.push(index);
+}
 
 export const allCourse = [
   {
@@ -117,7 +123,6 @@ export const allCourse = [
     units: "3",
     department: "Computer Science",
   },
-
   {
     title: "Digital Electronics",
     code: "com111",

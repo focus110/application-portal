@@ -7,7 +7,7 @@ module.exports = new Sequelize(
   dbConnection.USER,
   dbConnection.PASSWORD,
   {
-    host: "localhost",
+    host: dbConnection.HOST,
     dialect: process.env.dialect,
 
     pool: {
