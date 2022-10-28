@@ -19,9 +19,10 @@ const Warning = () => {
         </svg>
       </div>
       <p className="mt-2 sm:mt-0">
-        Pls kindly make your payment to any of the school account below and take
-        the teller to the school bursary office after your payment have been
-        confirmed you will get access to start your courses registration.
+        Pls kindly make your payment to the school account below and take the
+        teller or printed reciept to the school bursary office after your
+        payment have been confirmed you will get access to start your courses
+        registration.
       </p>
     </div>
   );

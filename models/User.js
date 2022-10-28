@@ -19,18 +19,18 @@ const User = db.define("users", {
     },
     defaultValue: "",
   },
-  lastname: {
+  middlename: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
     validator: {
       notEmpty: true,
     },
     defaultValue: "",
   },
-  username: {
+  lastname: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true,
     validator: {
       notEmpty: true,
     },
@@ -162,69 +162,28 @@ const User = db.define("users", {
     },
     defaultValue: "",
   },
-  department: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
 
   // BREAK GUARDIAN
 
-  // BREAK
-  guardian_fname: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
-  guardian_lname: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
-  guardian_mname: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
-  guardian_home_address: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
-  guardian_telephone: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
-
   //
-  course_of_study: {
+  // course_of_study: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   validator: {
+  //     notEmpty: true,
+  //   },
+  //   defaultValue: "",
+  // },
+  session: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
       notEmpty: true,
     },
-    defaultValue: "",
+    defaultValue:
+      new Date().getFullYear() + "/" + (new Date().getFullYear() + 1),
   },
-  nd: {
+  semester: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
@@ -248,14 +207,7 @@ const User = db.define("users", {
     },
     defaultValue: "",
   },
-  olevel_result: {
-    type: Sequelize.JSON,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
-    defaultValue: "",
-  },
+
   school: {
     type: Sequelize.STRING,
     allowNull: false,

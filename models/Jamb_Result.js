@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const User = require("./User");
 
-const Avatar = db.define("avatar", {
+const Jamb_Result = db.define("Jamb_Result", {
   id: {
     type: Sequelize.DataTypes.UUID,
     defaultValue: function () {
@@ -11,7 +11,31 @@ const Avatar = db.define("avatar", {
     },
     primaryKey: true,
   },
-  avatar: {
+  jamb_Reg_Number: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "",
+  },
+  jamb_Year: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "",
+  },
+  subject: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "",
+  },
+  score: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
@@ -29,11 +53,11 @@ const Avatar = db.define("avatar", {
   },
 });
 
-Avatar.associate = (models) => {
-  Avatar.belongsTo(User, {
+Jamb_Result.associate = (models) => {
+  Jamb_Result.belongsTo(User, {
     foreignKey: "userID",
     as: "user",
   });
 };
 
-module.exports = Avatar;
+module.exports = Jamb_Result;

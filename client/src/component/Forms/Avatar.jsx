@@ -3,15 +3,17 @@ import AvatarContext from "../../context/avatar/avatarContext";
 import AlertContext from "../../context/alert/alertContext";
 import NavigationBtn from "../Buttons/NavigationBtn";
 import user_img from "../../img/user.png";
+import Alert from "../Main/Alert";
 
 const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
   const avatarContext = useContext(AvatarContext);
   const alertContext = useContext(AlertContext);
 
   const { avaUrl, setAvatar, getAvatar } = avatarContext;
-  const { alert, setAlert } = alertContext;
+  const { alerts, setAlert } = alertContext;
 
   // const [filename, setFilename] = useState("Choose Image");
+  // const [file, setFile] = useState("");
 
   const onChange = (e) => {
     // setFile(e.target.files[0]);
@@ -25,21 +27,16 @@ const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
 
     const formData = new FormData();
 
-    if (file === "" || file === null) {
+    if (file.data === null) {
       setAlert("Choose a file", "danger");
     } else {
       formData.append("upload", file);
+      setAvatar(formData);
       setCurrent(current + 1);
-      // formData.append("upload", file);
-      // setAvatar(formData);
       // setFile("");
       // setFilename("");
       // setAlert("Avatar Upadated", "success");
-
-      // getAvatar();
-      // console.log("EFX", avaUrl);
     }
-    // update(user);
   };
 
   return (
@@ -62,6 +59,13 @@ const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
         />
         <h2 className="text-md font-normal text-sm mb-4">
           {file?.name ?? "Choose Image"}
+          <div className="text-xs sm:text-base text-red-500">
+            {alerts.length > 0
+              ? alerts.map((alert) => {
+                  return alert.msg;
+                })
+              : null}
+          </div>
         </h2>
         <label
           className="border-rectem-50 border-[1px] rounded-sm py-2 px-4 cursor-pointer text-base font-normal"
@@ -69,6 +73,7 @@ const Avatar = ({ current, setCurrent, user, setUser, file, setFile }) => {
         >
           <span> Choose image</span>
         </label>
+
         <div className="pt-8">
           <NavigationBtn current={current} setCurrent={setCurrent} />
         </div>

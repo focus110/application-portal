@@ -4,6 +4,9 @@ const users = require("./routes/users");
 const auth = require("./routes/auth");
 const avatar = require("./routes/avatar");
 const course = require("./routes/course");
+const olevel = require("./routes/olevel_result");
+const jambResult = require("./routes/jamb_result");
+const guardianInfo = require("./routes/guardianInfo");
 const cors = require("cors");
 
 // database
@@ -18,13 +21,16 @@ app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // ROUTES
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use("/api/avatar", avatar);
 app.use("/api/course", course);
+app.use("/api/olevel", olevel);
+app.use("/api/jamb-result", jambResult);
+app.use("/api/guardianInfo", guardianInfo);
 
 // remove before deploy
 app.get("/", (req, res) => {

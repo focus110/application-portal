@@ -5,6 +5,7 @@ import logo from "../img/logo.png";
 import AuthContext from "../context/auth/authContext";
 import AlertContext from "../context/alert/alertContext";
 import Alert from "../component/Main/Alert";
+import { departmentList } from "../component/Data/Data";
 
 const RegisterPage = () => {
   const alertContext = useContext(AlertContext);
@@ -13,6 +14,14 @@ const RegisterPage = () => {
   const { setAlert } = alertContext;
   const { register, error, clearErrors, isAuthenticated } = authContext;
   const goTo = useNavigate();
+
+  const deptList = departmentList.map((item, i) => {
+    return (
+      <option key={i} value={item.dept}>
+        {item.dept}
+      </option>
+    );
+  });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,25 +39,27 @@ const RegisterPage = () => {
   }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    gender: "",
+    // firstname: "",
+    // lastname: "",
+    // username: "",
+    // gender: "",
     program: "",
+    department: "",
     email: "",
-    phone: "",
+    // phone: "",
     password: "",
     password2: "",
   });
 
   const {
-    firstname,
-    lastname,
-    username,
-    gender,
+    // firstname,
+    // lastname,
+    // username,
+    // gender,
     email,
     program,
-    phone,
+    department,
+    // phone,
     password,
     password2,
   } = user;
@@ -58,6 +69,7 @@ const RegisterPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (
       // firstname === "" ||
       // lastname === "" ||
@@ -66,6 +78,7 @@ const RegisterPage = () => {
       email === "" ||
       program === "" ||
       // phone === "" ||
+      department === "" ||
       password === "" ||
       password2 === ""
     ) {
@@ -80,6 +93,7 @@ const RegisterPage = () => {
         // gender: gender,
         email: email.toLocaleLowerCase(),
         program: program.toLocaleLowerCase(),
+        department: department.toLocaleLowerCase(),
         // phone: phone,
         password: password,
       });
@@ -212,6 +226,27 @@ const RegisterPage = () => {
                     <option value="hnd">HND</option>
                   </select>
                 </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-start">
+              <label
+                htmlFor="department"
+                className="block text-sm font-medium text-rectem-100 mb-2"
+              >
+                department
+              </label>
+              <div className="w-full">
+                <select
+                  name="department"
+                  className="block w-full px-5 py-2.5 text-sm font-normal text-rectem-grey bg-white border rounded-3xl transition ease-in-out m-0 focus:text-rectem-grey focus:bg-white focus:border-rectem-50 focus:outline-none"
+                  onChange={onChange}
+                >
+                  <option value="" selected disabled>
+                    Select Department
+                  </option>
+                  {deptList}
+                </select>
               </div>
             </div>
 

@@ -10,6 +10,167 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/solid";
 
+// Department Data
+export const departmentList = [
+  {
+    id: "1",
+    dept: "Architectural Technology",
+  },
+  {
+    id: "2",
+    dept: "Estate Management",
+  },
+  {
+    id: "3",
+    dept: "Quantity Surveying",
+  },
+  {
+    id: "4",
+    dept: "Computer Science",
+  },
+  {
+    id: "5",
+    dept: "Science Laboratory Technology",
+  },
+  {
+    id: "6",
+    dept: "Computer Engineering",
+  },
+  {
+    id: "7",
+    dept: "Civil Engineering",
+  },
+  {
+    id: "8",
+    dept: "Electrical Electronics Engineering",
+  },
+  {
+    id: "9",
+    dept: "Accountancy",
+  },
+];
+
+export const department = [
+  {
+    id: "1",
+    dept: "Architectural Technology",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "2",
+    dept: "Estate Management",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "3",
+    dept: "Quantity Surveying",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "qt s",
+        sch: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "4",
+    dept: "Computer Science",
+    course: [
+      {
+        code: "com",
+        unit: "",
+        title: "File management",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "5",
+    dept: "Science Laboratory Technology",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "6",
+    dept: "Computer Engineering",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "7",
+    dept: "Civil Engineering",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "8",
+    dept: "Electrical Electronics Engineering",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+  {
+    id: "9",
+    dept: "Accountancy",
+    course: [
+      {
+        code: "",
+        unit: "",
+        title: "",
+        semester: "",
+        year: "Nd 1",
+      },
+    ],
+  },
+];
+
 // Sidebar Data
 export const SidebarData = [
   {
@@ -122,6 +283,8 @@ export const allCourse = [
     code: "gns101",
     units: "3",
     department: "Computer Science",
+    school: "",
+    year: "nd2",
   },
   {
     title: "Digital Electronics",
@@ -171,6 +334,14 @@ export const form = [
   {
     id: "1",
   },
+];
+
+export const grade = ["A1", "B2", "B3", "C4", "C5", "C6", "D7", "E8", "F9"];
+
+export const examTypes = [
+  { type: "Waec" },
+  { type: "Neco" },
+  { type: "Nabteb" },
 ];
 
 // long array

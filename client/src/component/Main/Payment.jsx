@@ -21,23 +21,23 @@ const Payment = ({ setIsCleared }) => {
         </div>
         <div className="flex justify-between border-b py-4 px-2 text-sm sm:text-base text-gray-500 font-semibold">
           <p>Account Number</p>
-          <p>1234567890</p>
+          <p>1015951222</p>
         </div>
         <div className="flex justify-between border-b py-4 px-2 text-sm sm:text-base text-gray-500 font-semibold">
           <p>Bank name</p>
-          <p>WEMA BANK</p>
+          <p>ZENITH BANK</p>
         </div>
         <div className="flex justify-between border-b py-4 px-2 text-sm sm:text-base text-gray-500 font-semibold">
           <p>Beneficiary name</p>
-          <p>Rectem Limited</p>
+          <p>Red. Coll. Of Tech & Mgt Ltd-Rev.</p>
         </div>
       </div>
-      <button
+      {/* <button
         onClick={() => setIsCleared(true)}
         className="cursor-pointer w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-4 bg-rectem-50 opacity-95 hover:opacity-100 text-base font-medium text-white focus:outline-none mt-8 sm:m-8 sm:w-auto sm:text-sm"
       >
         I have made bank transfer
-      </button>
+      </button> */}
       {/* <Link
     to="#!"
     className="text-center h-8 bg-rectem-50 rounded-3xl"

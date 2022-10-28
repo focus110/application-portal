@@ -18,7 +18,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      goTo("/dashboard");
+      goTo("/dashboard", { replace: true });
     }
 
     if (error === "Invalid credentials") {

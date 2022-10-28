@@ -25,14 +25,14 @@ const NavigationBtn = ({ current, setCurrent }) => {
 
       {current >= 5 ? (
         <button
-          disabled
+          // disabled
           className="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
         >
           Submit form
         </button>
       ) : (
         <button className="w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 bg-rectem-50 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">
-          countinue
+          continue
         </button>
       )}
     </div>

@@ -3,7 +3,7 @@ import Button from "../Buttons/Button";
 
 const ApplicationGuide = () => {
   return (
-    <div className="bg-white p-6 sm:p-10">
+    <div className="bg-slate-100 p-6 sm:p-10 border-l-8 border-rectem-50">
       <h3
         className="text-lg leading-6 font-medium text-gray-900 mb-2"
         id="modal-title"
@@ -36,7 +36,7 @@ const ApplicationGuide = () => {
           path="/profile"
           buttonType={`danger`}
         />
-        <Button name="Change username" path="/settings" buttonType={`light`} />
+        {/* <Button name="Change username" path="/settings" buttonType={`light`} /> */}
       </div>
     </div>
   );

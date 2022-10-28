@@ -34,11 +34,12 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
     }
   }, [error]);
 
-  // useEffect(() => {
-  //   if (avaUrl) {
-  //     getAvatar();
-  //   }
-  // }, [filename]);
+  useEffect(() => {
+    //
+    getAvatar();
+    //
+    console.log(avaUrl.replace(" ", "%"));
+  }, []);
 
   const openModal = (e) => {
     setShowModal((prev) => !prev);
@@ -84,7 +85,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
             "loading..."
           ) : (
             <img
-              src={!avaUrl || avaUrl === "" ? user_img : avaUrl}
+              src={user_img}
               alt="Profile Pic"
               className="rounded-full h-20 md:h-28 lg:h-24 xl:h-40 w-20 md:w-28 lg:w-24 xl:w-40"
             />
@@ -96,7 +97,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
             className="flex items-center flex-col space-y-4 text-sm"
           >
             <div className="w-max flex mt-2  items-center">
-              <input
+              {/* <input
                 style={{ display: "none" }}
                 type="file"
                 id="file"
@@ -112,7 +113,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
                   : `${filename?.split(" ")[0]}...${
                       filename.split(" ")[filename.split(" ").length - 1]
                     }`}
-              </label>
+              </label> */}
               {/* <h1 className="w-7/12 px-2 overflow-x-scroll scroll">
                 {filename}
               </h1> */}
@@ -137,7 +138,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
           <div className="flex flex-row gap-20 ">
             <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 justify-between w-full gap-8">
               {/* Username */}
-              <div className="flex flex-col justify-evenly gap-2">
+              {/* <div className="flex flex-col justify-evenly gap-2">
                 <span className="text-rectem-black font-medium not-italic text-base">
                   Username
                 </span>
@@ -149,10 +150,10 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
                     Change Username
                   </span>
                 </button>
-              </div>
+              </div> */}
 
               {/* First Name */}
-              <div className="flex flex-col justify-evenly gap-2">
+              {/* <div className="flex flex-col justify-evenly gap-2">
                 <span className="text-rectem-black font-medium not-italic text-base">
                   First name
                 </span>
@@ -164,10 +165,10 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
                     Change Firstname
                   </span>
                 </button>
-              </div>
+              </div> */}
 
               {/* Last Name */}
-              <div className="flex flex-col justify-evenly gap-2">
+              {/* <div className="flex flex-col justify-evenly gap-2">
                 <span className="text-rectem-black font-medium not-italic text-base">
                   Last name
                 </span>
@@ -179,7 +180,7 @@ const Settings = ({ name, setName, showModal, setShowModal }) => {
                     Change Lastname
                   </span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
 

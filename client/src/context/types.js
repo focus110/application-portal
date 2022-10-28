@@ -16,6 +16,14 @@ export const SET_AVATAR = "SET_AVATAR";
 export const GET_AVATAR = "GET_AVATAR";
 export const REMOVE_AVATAR = "REMOVE_AVATAR";
 export const SETAVATAR_FAIL = "SETAVATAR_FAIL";
+export const G_REGISTER_SUCCESS = "G_REGISTER_SUCCESS";
+export const G_REGISTER_FAIL = "G_REGISTER_FAIL";
+export const G_USER_LOADED = "G_USER_LOADED";
+export const G_AUTH_ERROR = "G_AUTH_ERROR";
+
+export const G_UPDATE_SUCCESS = " G_UPDATE_SUCCESS";
+export const G_UPDATE_FAIL = " G_UPDATE_FAIL";
+
 // export const ADD_COURSE = "ADD_COURSE";
 // export const GET_COURSE = "GET_COURSE";
 // export const COURSE_ERROR = "COURSE_ERROR";

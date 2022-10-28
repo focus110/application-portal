@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const User = require("./User");
 
-const Avatar = db.define("avatar", {
+const Olevel_Result = db.define("olevel_Result", {
   id: {
     type: Sequelize.DataTypes.UUID,
     defaultValue: function () {
@@ -11,7 +11,15 @@ const Avatar = db.define("avatar", {
     },
     primaryKey: true,
   },
-  avatar: {
+  subject: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: "",
+  },
+  grade: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
@@ -29,11 +37,11 @@ const Avatar = db.define("avatar", {
   },
 });
 
-Avatar.associate = (models) => {
-  Avatar.belongsTo(User, {
+Olevel_Result.associate = (models) => {
+  Olevel_Result.belongsTo(User, {
     foreignKey: "userID",
     as: "user",
   });
 };
 
-module.exports = Avatar;
+module.exports = Olevel_Result;

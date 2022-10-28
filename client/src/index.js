@@ -5,6 +5,7 @@ import App from "./App";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import AvatarState from "./context/avatar/AvatarState";
+import GuardianState from "./context/guardian/GuardianState";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <AuthState>
       <AlertState>
         <AvatarState>
-          <App />
+          <GuardianState>
+            <App />
+          </GuardianState>
         </AvatarState>
       </AlertState>
     </AuthState>

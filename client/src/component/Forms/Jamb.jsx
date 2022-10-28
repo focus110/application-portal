@@ -1,44 +1,87 @@
+import e from "cors";
 import React, { useState } from "react";
 import NavigationBtn from "../Buttons/NavigationBtn";
-import { arr } from "../Data/Data";
+import { guid, jambYears } from "./script";
 
 const Jamb = ({ current, setCurrent, user, setUser }) => {
-  const [sub, setSub] = useState([]);
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-  const onFChange = (e) =>
-    setSub([...sub, { [e.target.name]: e.target.value }]);
-  console.log(sub);
+  const [reg, setReg] = useState("");
+  const [year, setYear] = useState("");
+  const [subjects, setSubjects] = useState([
+    {
+      id: guid(),
+      name: "",
+      score: "",
+      jamb_Reg_Number: reg ?? "",
+      jamb_Year: year ?? "",
+    },
+  ]);
 
-  const jambYears = arr.map((item, i) => {
-    return (
-      <option key={i} value={item}>
-        {item}
-      </option>
-    );
-  });
+  const onChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-  // const onChange = (e) => setSub([]);
+    const newSubjects = [...subjects];
 
-  const onClick = () => {
-    const payload = { id: "", subject: "", score: "" };
-    setSub([...sub, payload]);
+    if (name === "jamb_reg_number") {
+      setReg(value);
+      newSubjects?.forEach((element) => {
+        element.jamb_Reg_Number = value;
+      });
+    }
+
+    if (name === "jamb_year") {
+      setYear(value);
+      newSubjects?.forEach((element) => {
+        element.jamb_Year = value;
+      });
+    }
+
+    setSubjects(newSubjects);
   };
-  const remove = (item) => {
-    const payload = sub.filter((item) => item);
-    setSub([...sub, payload]);
+
+  const updateSubject = (subject, index, value) => {
+    const newSubjects = [...subjects];
+    newSubjects[index].name = value;
+
+    setSubjects(newSubjects);
+  };
+
+  const updateScore = (subject, index, value) => {
+    const newSubjects = [...subjects];
+    newSubjects[index].score = value;
+    setSubjects(newSubjects);
+  };
+
+  // add new form
+  const addForm = () => {
+    const payload = {
+      id: guid(),
+      name: "",
+      score: "",
+      jamb_Reg_Number: reg,
+      jamb_Year: year,
+    };
+    if (subjects.length < 10) setSubjects([...subjects, payload]);
+    if (subjects.length > 6) alert("Maximun of 8 subject");
+  };
+
+  // remove form by ID
+  const remove = (id) => {
+    const newSubjects = [...subjects];
+    const payload = newSubjects.filter((subject) => subject.id != id);
+    setSubjects(payload);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // if (subjects.length < 8) return alert("At least 8 subject is required");
 
-    if (user === "" || user === null) {
-      console.log("Enter all fields");
-    } else {
-      setCurrent(current + 1);
-      console.log("submitted");
-      // update(user);
-    }
+    // test purpose
+    setCurrent(current + 1);
   };
+
+  console.log(subjects);
+
   return (
     <div>
       <form onSubmit={onSubmit} className="flex flex-col space-y-4">
@@ -57,6 +100,7 @@ const Jamb = ({ current, setCurrent, user, setUser }) => {
               className="block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
               placeholder="Jamb Reg Number"
               onChange={onChange}
+              required
             />
           </div>
           <div className="w-full">
@@ -67,9 +111,11 @@ const Jamb = ({ current, setCurrent, user, setUser }) => {
               Jamb Year*
             </label>
             <select
+              value={user?.jamb_reg_number?.trim()}
               name="jamb_year"
               className="block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
               onChange={onChange}
+              required
             >
               <option selected value="" disabled>
                 Choose year
@@ -79,102 +125,70 @@ const Jamb = ({ current, setCurrent, user, setUser }) => {
           </div>
         </div>
 
-        <div className="flex w-full space-x-4 items-center">
-          <div className="w-[60%] sm:w-full">
-            <label
-              htmlFor="subject_1"
-              className="block text-sm font-medium text-rectem-100 mb-2"
+        <div className="">
+          <div
+            type=""
+            onClick={addForm}
+            className="text-sm cursor-pointer bg-rectem-50 p-2  text-white flex justify-center items-center"
+          >
+            Add subject
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="pl-2 w-6 h-6"
             >
-              Subject 1
-            </label>
-            <input
-              disabled
-              value="english language"
-              name="subject_1"
-              type="text"
-              className="cursor-not-allowed block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="English Language"
-              onChange={onChange}
-            />
-          </div>
-          <div className="w-[30%] sm:w-full">
-            <label
-              htmlFor="score"
-              className="block text-sm font-medium text-rectem-100 mb-2"
-            >
-              Score
-            </label>
-            <input
-              name="score_1"
-              type="number"
-              min="0"
-              max="100"
-              className="block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="Max score 100"
-              onChange={onChange}
-            />
-          </div>
-          <div className="w-[10%] sm:w-full">
-            <label
-              htmlFor="id"
-              className="block text-sm font-medium text-rectem-100 mb-2"
-            >
-              action
-            </label>
-            <div
-              onClick={onClick}
-              className="cursor-pointer bg-rectem-50 p-2 rounded-full text-white w-8 h-8 sm:w-12 sm:h-12 flex justify-center items-center"
-            >
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-            </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
           </div>
         </div>
 
-        {sub.map((item, i) => {
+        {subjects.map((subject, index, item) => {
+          const sn = index + 1;
+
           return (
-            <div key={i} className="flex w-full space-x-4 items-center">
+            <div key={index} className="flex w-full space-x-4 items-center">
               <div className="w-[60%] sm:w-full">
                 <label
-                  htmlFor={`subject_${i + 2}`}
+                  htmlFor={`subject_${sn}`}
                   className="block text-sm font-medium text-rectem-100 mb-2"
                 >
-                  Subject {i + 2}
+                  subjects {sn}
                 </label>
                 <input
-                  name={`subject_${i + 2}`}
+                  name="subjects"
                   type="text"
                   className="block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-                  placeholder={`Subject ${i + 2}`}
-                  onChange={onFChange}
+                  placeholder={`subjects ${sn}`}
+                  onChange={(e) =>
+                    updateSubject(subject, index, e.target.value)
+                  }
+                  required
+                  value={subject.name}
                 />
               </div>
               <div className="w-[30%] sm:w-full">
                 <label
-                  htmlFor={`score_${i + 2}`}
+                  htmlFor={`score_${sn}`}
                   className="block text-sm font-medium text-rectem-100 mb-2"
                 >
                   Score
                 </label>
                 <input
-                  name={`score_${i + 2}`}
+                  name="score"
                   type="number"
                   min="0"
                   max="100"
                   className="block w-full rounded-sm border bg-white py-2.5 px-2 sm:px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
                   placeholder="Max score 100"
-                  onChange={onFChange}
+                  onChange={(e) => updateScore(subject, index, e.target.value)}
+                  required
+                  value={subject.score}
                 />
               </div>
               <div className="w-auto sm:w-full">
@@ -182,10 +196,11 @@ const Jamb = ({ current, setCurrent, user, setUser }) => {
                   htmlFor="id"
                   className="block text-sm font-medium text-rectem-100 mb-2"
                 >
-                  action
+                  remove
                 </label>
+
                 <div
-                  onClick={(item) => remove(item)}
+                  onClick={() => remove(subject.id)}
                   className="cursor-pointer bg-red-400 p-2 rounded-full text-white w-8 h-8 sm:w-12 sm:h-12 flex justify-center items-center"
                 >
                   <svg

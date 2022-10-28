@@ -4,6 +4,7 @@ import AuthContext from "../../context/auth/authContext";
 import { Nationality, States } from "../Data/Data";
 
 import NavigationBtn from "../Buttons/NavigationBtn";
+import { formatPhone } from "./script";
 
 const BioForm = ({ current, setCurrent, user, setUser }) => {
   const alertContext = useContext(AlertContext);
@@ -20,7 +21,15 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
     // eslint-disable-next-line
   }, [error]);
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.name === "phone") {
+      const formattedPhone = formatPhone(e.target.value);
+      setUser({ ...user, phone: formattedPhone });
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
+
   const onSelectGender = (e) => setUser({ ...user, gender: e.target.value });
   const onSelectState = (e) => {
     setUser({ lga: e.target.value });
@@ -29,56 +38,44 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
   const onSelectLga = (e) => setUser({ ...user, lga: e.target.value });
   const onSelectNal = (e) => setUser({ ...user, nationality: e.target.value });
 
-  // useEffect(() => {
-
-  //   }
-
-  //   return () => {
-  //     second;
-  //   };
-  // }, [third]);
-
   const {
-    Middlename,
-    Mobilenumber,
-    email,
     firstname,
-    gender,
-    lastname,
-    lga,
     middlename,
-    mobilenumber,
+    lastname,
+    phone,
+    email,
+    gender,
+    dob,
+    religion,
+    address,
     nationality,
     state,
+    lga,
   } = user;
-  // console.log(user);
 
   const onSubmit_ = (e) => {
     e.preventDefault();
 
     if (
-      Middlename === "" ||
-      Mobilenumber === "" ||
-      email === "" ||
       firstname === "" ||
-      gender === "" ||
       lastname === "" ||
-      lga === "" ||
       middlename === "" ||
-      mobilenumber === "" ||
+      phone === "" ||
+      email === "" ||
+      gender === "" ||
+      dob === "" ||
+      religion === "" ||
+      address === "" ||
       nationality === "" ||
-      state === ""
+      state === "" ||
+      lga === ""
     ) {
       setAlert("Enter all fields", "danger");
     } else {
       setCurrent(current + 1);
-      // setAlert("", "success"); const formData = new FormData();
-
-      // update(user);
+      update(user);
     }
   };
-
-  // console.log(user);
 
   return (
     <div>
@@ -133,15 +130,18 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
             />
           </div>
           <div className="w-full">
-            <label className="block text-sm font-medium text-rectem-100 mb-2">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-rectem-100 mb-2"
+            >
               Mobile number
             </label>
             <input
-              name="mobilenumber"
+              name="phone"
               type="phone"
-              value={mobilenumber}
+              value={phone}
               className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
-              placeholder="Mobile number"
+              placeholder="(+234)"
               onChange={onChange}
               required
             />
@@ -165,7 +165,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
           </div>
           <div className="w-full ">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
-              Sex
+              Gender
             </label>
             <div className="w-full relative">
               <select
@@ -173,8 +173,9 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 aria-label="Default select example"
                 onChange={onSelectGender}
                 required
+                value={gender}
               >
-                <option defaultValue value="male">
+                <option selected value="" disabled>
                   choose your gender
                 </option>
                 <option value="male">Male</option>
@@ -198,6 +199,62 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row w-full sm:space-x-4 items-center">
+          <div className="w-full mb-4 sm:mb-0">
+            <label
+              htmlFor="dob"
+              className="block text-sm font-medium text-rectem-100 mb-2"
+            >
+              Date of birth
+            </label>
+            <input
+              name="dob"
+              type="date"
+              value={dob}
+              className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+              placeholder="Date of birth"
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className="w-full">
+            <label
+              htmlFor="religion"
+              className="block text-sm font-medium text-rectem-100 mb-2"
+            >
+              Religion
+            </label>
+            <input
+              name="religion"
+              type="text"
+              value={religion}
+              className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+              placeholder="religion"
+              onChange={onChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="flex w-full space-x-4 items-center">
+          <div className="w-full">
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-rectem-100 mb-2"
+            >
+              Address*
+            </label>
+            <textarea
+              name="address"
+              type="text"
+              className="block w-full rounded-sm border bg-white py-2.5 px-5 text-sm text-rectem-grey outline-none focus:border-rectem-50"
+              placeholder="Address"
+              onChange={onChange}
+              value={address}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row w-full sm:space-x-4 items-center">
           <div className="sm:hidden w-full relative  sm:mb-0">
             <label className="block text-sm font-medium text-rectem-100 mb-2">
               Nationality
@@ -210,7 +267,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectNal}
                 required
               >
-                <option value="none" defaultValue disabled hidden>
+                <option value="" defaultValue disabled hidden>
                   Select an Option
                 </option>
                 {Nationality.map((item, i) => {
@@ -251,7 +308,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectNal}
                 required
               >
-                <option value="none" defaultValue disabled>
+                <option value="" selected disabled>
                   Select an Option
                 </option>
                 {Nationality.map((item, i) => {
@@ -290,7 +347,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectState}
                 required
               >
-                <option value="none" defaultValue disabled>
+                <option value="" selected disabled>
                   Select an Option
                 </option>
                 {States.map((state, i) => {
@@ -329,7 +386,7 @@ const BioForm = ({ current, setCurrent, user, setUser }) => {
                 onChange={onSelectLga}
                 required
               >
-                <option value="none" defaultValue disabled>
+                <option value="" selected>
                   Select an Option
                 </option>
 

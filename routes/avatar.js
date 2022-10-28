@@ -1,21 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const { authUser } = require("../middleware/jwt");
+const crypto = require("crypto");
+const sharp = require("sharp");
+
 const {
   uploadAvatar,
   deleteAvatar,
   fetchAvatar,
 } = require("../controllers/avatarController");
 
+const randImgName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
+
 const multer = require("multer");
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+
+    cb(null, randImgName() + `.${ext}`);
+  },
+});
+
 const upload = multer({
   limits: {
     fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
-      return cb(new Error("Please upload a jpg or png"));
+      return cb(new Error("Please upload a valid image"));
     }
 
     cb(undefined, true);

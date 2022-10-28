@@ -1,6 +1,8 @@
 const response = require("../middleware/response");
 const User = require("../models/User");
 const UserOTP = require("../models/UserOTP");
+const GuardianInfo = require("../models/GuardianInfo");
+const Olevel_Result = require("../models/Olevel_Result");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -92,12 +94,13 @@ class UserController {
 
     try {
       const {
-        firstname,
-        lastname,
-        username,
-        gender,
-        phone,
+        // firstname,
+        // lastname,
+        // username,
+        // gender,
+        // phone,
         email,
+        department,
         program,
         password,
       } = req.body;
@@ -108,7 +111,7 @@ class UserController {
         // !lastname ||
         // !username ||
         // !gender ||
-        // !phone ||
+        !department ||
         !program ||
         !email ||
         !password
@@ -149,6 +152,7 @@ class UserController {
         // username: username,
         // gender: gender,
         // phone: phone,
+        department: department,
         email: email,
         program: program,
         password: bcrypt.hashSync(password, 10),
@@ -219,23 +223,35 @@ class UserController {
       const id = req.user.id;
 
       const {
-        username,
         firstname,
+        middlename,
         lastname,
         email,
         phone,
-        department,
+        gender,
+        dob,
+        religion,
+        address,
+        nationality,
+        state,
+        lga,
         password,
       } = req.body;
 
       // Build user object
       const userFields = {};
-      if (username) userFields.username = username;
       if (firstname) userFields.firstname = firstname;
+      if (middlename) userFields.middlename = middlename;
       if (lastname) userFields.lastname = lastname;
-      if (department) userFields.department = department;
       if (email) userFields.email = email;
       if (phone) userFields.phone = phone;
+      if (gender) userFields.gender = gender;
+      if (dob) userFields.dob = dob;
+      if (religion) userFields.religion = religion;
+      if (address) userFields.home_address = address;
+      if (nationality) userFields.nationality = nationality;
+      if (state) userFields.state_of_origin = state;
+      if (lga) userFields.local_gov = lga;
       // if password is provided then bcrypt password
       if (password) userFields.password = bcrypt.hashSync(password, 10);
 

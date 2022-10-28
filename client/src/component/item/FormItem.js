@@ -2,9 +2,9 @@ import React from "react";
 import BioForm from "../Forms/BioForm";
 import AcademicForm from "../Forms/AcademicForm";
 import Jamb from "../Forms/Jamb";
-import MedicalReportForm from "../Forms/MedicalReportForm";
 import Avatar from "../Forms/Avatar";
 import Guardian from "../Forms/Guardian";
+import Olevel from "../Forms/Olevel";
 
 const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
   switch (current) {
@@ -47,14 +47,7 @@ const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
         />
       );
     case 5:
-      return (
-        <MedicalReportForm
-          current={current}
-          setCurrent={setCurrent}
-          user={user}
-          setUser={setUser}
-        />
-      );
+      return <Olevel current={current} setCurrent={setCurrent} />;
     case 6:
       return (
         <AcademicForm

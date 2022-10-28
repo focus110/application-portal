@@ -71,7 +71,7 @@ const CourseReg = () => {
             <EmptyTable />
           ) : (
             <button className="cursor-pointer w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 bg-rectem-50 opacity-95 hover:opacity-100 text-base font-medium text-white focus:outline-none m-8 ml-0 sm:w-auto sm:text-sm">
-              Submit
+              Save
             </button>
           )}
         </div>

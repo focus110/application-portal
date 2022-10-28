@@ -1,6 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import ProtectedRoute from "./component/routing/ProtectedRoute";
 
 import LoginPage from "./pages/LoginPage";
@@ -18,15 +24,27 @@ import AvatarContext from "./context/avatar/avatarContext";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-function App() {
+function App(props) {
   const authContext = useContext(AuthContext);
   const avatarContext = useContext(AvatarContext);
 
+  const { user } = authContext;
+
+  // const goTo = useNavigate();
+
   useEffect(() => {
     authContext.loadUser();
+
+    // if (!authContext.isAuthenticated) {
+    //   goTo("/");
+    // }
     // eslint-disable-next-line
     // avatarContext.getAvatar();
   }, []);
+
+  // if (!user) {
+  //   return <Navigate to="/" />;
+  // }
 
   return (
     <Router>

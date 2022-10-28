@@ -4,38 +4,39 @@ const Avatar = require("../models/Avatar");
 const crypto = require("crypto");
 const sharp = require("sharp");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
 const randImgName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex");
 
 // s3 setup
-const {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-  DeleteObjectCommand,
-} = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+// const {
+//   S3Client,
+//   PutObjectCommand,
+//   GetObjectCommand,
+//   DeleteObjectCommand,
+// } = require("@aws-sdk/client-s3");
+// const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-const bucketName = process.env.BUCKET_NAME;
-const bucketRegion = process.env.BUCKET_REGION;
-const accessKey = process.env.ACCESS_KEY;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// const bucketName = process.env.BUCKET_NAME;
+// const bucketRegion = process.env.BUCKET_REGION;
+// const accessKey = process.env.ACCESS_KEY;
+// const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-  },
-  region: bucketRegion,
-});
+// const s3 = new S3Client({
+//   credentials: {
+//     accessKeyId: accessKey,
+//     secretAccessKey: secretAccessKey,
+//   },
+//   region: bucketRegion,
+// });
 
 class AvatarController {
   // upload avatar
   static async uploadAvatar(req, res) {
     try {
-      const buffer = req.file.buffer;
+      const key = req.file.filename;
       const id = req.user.id;
 
       // find the id in database
@@ -61,44 +62,43 @@ class AvatarController {
         // return res
         //   .status(500)
         //   .send(response("delete current avatar before upload", {}, false));
-        const getObjectParams = {
-          Bucket: bucketName,
-          Key: avatar.avatar,
-        };
-
+        // const getObjectParams = {
+        //   Bucket: bucketName,
+        //   Key: avatar.avatar,
+        // };
         // delete image from s3 bucket
-        const command = new DeleteObjectCommand(getObjectParams);
-        await s3.send(command, (err, data) => {});
-
+        // const command = new DeleteObjectCommand(getObjectParams);
+        // await s3.send(command, (err, data) => {});
         await avatar.destroy(); // delete avatar from db
       }
 
-      const buffer_ = await sharp(buffer)
-        .resize({ height: 500, width: 500 })
-        .toBuffer();
+      // const params = {
+      //   Bucket: bucketName,
+      //   Key: randImgName(),
+      //   Body: buffer_,
+      //   ContentType: req.file.mimetype,
+      // };
 
-      const params = {
-        Bucket: bucketName,
-        Key: randImgName(),
-        Body: buffer_,
-        ContentType: req.file.mimetype,
-      };
+      // const command = new PutObjectCommand(params);
 
-      const command = new PutObjectCommand(params);
+      // await s3.send(command, (err, data) => {
+      //   // console.log(err);
+      // });
 
-      await s3.send(command, (err, data) => {
-        // console.log(err);
-      });
+      // resize avatar to= 500px by 500px
+      // await sharp(req.file.path)
+      //   .resize({ height: 500, width: 500 })
+      //   .toFile(path.join(__dirname, `../uploads/${key}`));
 
       // save image Id
       await Avatar.create({
-        avatar: params.Key,
+        avatar: key,
         foreign_key: user.id,
       });
 
-      res.send("uploaded successfully");
+      res.send(req.file);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(404).send();
     }
   }
@@ -122,21 +122,27 @@ class AvatarController {
         return res.status(404).send(response("Invalid Credentials", {}, false));
       }
 
+      // res.set("Content-Type", "image/jpg");
+
       const avatar = await Avatar.findOne({
         where: { foreign_key: id },
       });
 
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: avatar.avatar,
-      };
+      if (!avatar)
+        return res.status(500).send(response("no avatar found!", {}, false));
 
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3, command, { expiresIn: 60 });
+      // const getObjectParams = {
+      //   Bucket: bucketName,
+      //   Key: avatar.avatar,
+      // };
 
-      res.send({ imgUrl: url });
+      // const command = new GetObjectCommand(getObjectParams);
+      // const url = await getSignedUrl(s3, command, { expiresIn: 60 });
+
+      res.send({
+        imgUrl: path.join(__dirname, `../uploads/${avatar.avatar}`),
+      });
     } catch (error) {
-      console.log(error);
       res.status(404).send(error);
     }
   }
@@ -169,20 +175,20 @@ class AvatarController {
       });
 
       if (!avatar)
-        return res.status(500).send(response("upload avatar", {}, false));
+        return res.status(500).send(response("no avatar found!", {}, false));
 
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: params,
-      };
+      // const getObjectParams = {
+      //   Bucket: bucketName,
+      //   Key: params,
+      // };
 
       // delete image from s3 bucket
-      const command = new DeleteObjectCommand(getObjectParams);
-      await s3.send(command, (err, data) => {});
+      // const command = new DeleteObjectCommand(getObjectParams);
+      // await s3.send(command, (err, data) => {});
 
       await avatar.destroy(); // delete avatar from db
 
-      res.send({});
+      res.send({ msg: "Deleted!" });
     } catch (error) {
       res.status(404).send();
     }
