@@ -12,6 +12,7 @@ const Profile = () => {
   const authContext = useContext(AuthContext);
 
   const [current, setCurrent] = useState(2);
+  const [submitted, setSubmitted] = useState(false);
 
   const [user, setUser] = useState({
     firstname: authContext?.user?.firstname,
@@ -53,7 +54,18 @@ const Profile = () => {
         Profile
       </span>
       <div className="not-italic tracking-tighten font-body py-8 text-2xl font-bold">
-        {true ? (
+        {submitted ? (
+          <>
+            <Warning />
+            <Payment />
+            <div
+              className="w-full inline-flex justify-center rounded-md border text-white text-center border-gray-300 shadow-sm px-4 py-2 bg-rectem-50 text-base font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 mt-8 sm:w-auto sm:text-sm"
+              onClick={() => setSubmitted(false)}
+            >
+              Review my profile
+            </div>
+          </>
+        ) : (
           <div className="mt-5 flex flex-col">
             <div className="flex items-center justify-between mb-12 text-[12px] sm:text-sm">
               <div className="flex items-center w-2/4 relative">
@@ -146,6 +158,7 @@ const Profile = () => {
                 onSubmit={onSubmit}
                 file={file}
                 setFile={setFile}
+                setSubmitted={setSubmitted}
               />
             </div>
             {/* <div className="flex space-x-8">
@@ -196,11 +209,6 @@ const Profile = () => {
             );
           })} */}
           </div>
-        ) : (
-          <>
-            <Warning />
-            <Payment />
-          </>
         )}
       </div>
     </div>

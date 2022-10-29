@@ -6,7 +6,15 @@ import Avatar from "../Forms/Avatar";
 import Guardian from "../Forms/Guardian";
 import Olevel from "../Forms/Olevel";
 
-const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
+const FormItem = ({
+  current,
+  setCurrent,
+  user,
+  setUser,
+  file,
+  setFile,
+  setSubmitted,
+}) => {
   switch (current) {
     case 1:
       return (
@@ -47,7 +55,13 @@ const FormItem = ({ current, setCurrent, user, setUser, file, setFile }) => {
         />
       );
     case 5:
-      return <Olevel current={current} setCurrent={setCurrent} />;
+      return (
+        <Olevel
+          current={current}
+          setCurrent={setCurrent}
+          setSubmitted={setSubmitted}
+        />
+      );
     case 6:
       return (
         <AcademicForm
